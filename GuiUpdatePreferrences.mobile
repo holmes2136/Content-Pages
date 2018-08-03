@@ -1,0 +1,608 @@
+<style type="text/css">
+    #js-progress-spinner {
+        display: initial;
+    }
+
+    button {
+        height: 45px !important;
+    }
+
+    .accountPreferencesContent {
+        white-space: nowrap;
+    }
+
+    .guiPreferencesHeader {
+        margin: 0px 20px 5px 5%;
+        font: 200 24px/30px arial;
+        color: #000000;
+        font-weight: bold !important;
+        padding-top: 15px;
+    }
+
+    .guiPreferenceBodyLines {
+        font: 200 20px/30px arial;
+        font-weight: bold !important;
+        padding: 15px 0px 15px 5.5%;
+    }
+
+    .guiPreferencesPageWrapper {
+        padding: 20px 20px 50px 20px;
+    }
+
+    .guiPreferencesInput,
+    .guiPreferencesInputError {
+        width: 100%;
+        height: 45px;
+        border: 1px solid #ccc;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        padding: 5px 10px;
+        font: 200 14px/30px arial;
+    }
+
+    .guiPreferencesInput {
+        border: 1px solid #ccc;
+        margin: 0px 0px 0px 6%;
+    }
+
+    .guiPreferencesInputError {
+        border: 1px solid red;
+        margin: 0px 0px 0px 6%;
+    }
+
+    .guiPreferencesButtonSaveWrapper {
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+        background: white;
+        position: absolute;
+    }
+
+        .guiPreferencesButtonSaveWrapper button {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-bottom-left-radius: 0px;
+        }
+
+    .guiPreferencesButtonReturnWrapper {
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+        padding: 20px 0px;
+    }
+
+    .guiPreferencesButtonReturn {
+        width: 90%;
+        margin-bottom: 10px;
+    }
+
+    .guiPreferencesErrorMessage,
+    .guiPreferencesSuccessMessage {
+        height: 10px;
+        padding: 15px 0px 20px 6%;
+        position: relative;
+        top: -10px;
+        display: none;
+    }
+
+    .guiPreferencesErrorMessage {
+        color: red;
+    }
+
+    .guiPreferencesSuccessMessage {
+        color: #40922f;
+    }
+</style>
+
+<div class="accountPreferencesContent">
+
+    <div class="guiPreferencesHeader">設定載具條碼及捐贈碼</div>
+
+    <div class="guiPreferenceBodyLines">手機載具條碼</div>
+    <div class="pure-g">
+        <div class="pure-u-24-24">
+            <div class="pure-u-19-24">
+                <input class="ui-autocomplete-input guiPreferencesInput" id="txtGuiCarrierCode" placeholder="請輸入手機載具條碼" type="text" value="">
+            </div>
+            <div class="pure-u-5-24 guiPreferencesButtonSaveWrapper">
+                <button class="pure-button pure-button-10 green pure-button-transparent" id="btnUpdateGuiCarrierCode" onclick="saveCarrierCode();" type="button">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">儲存</font>
+                    </font>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="errorValidationCarrierCode" class="guiPreferencesErrorMessage">請輸入手機載具條碼</div>
+    <div id="errorGeneralCarrierCode" class="guiPreferencesErrorMessage">無法儲存</div>
+    <div id="successCarrierCode" class="guiPreferencesSuccessMessage">儲存成功</div>
+
+    <div class="guiPreferenceBodyLines">自然人憑證條碼</div>
+    <div class="pure-g">
+        <div class="pure-u-24-24">
+            <div class="pure-u-19-24">
+                <input class="ui-autocomplete-input guiPreferencesInput" id="txtGuiGovernmentIdCode" placeholder="請輸入自然人憑證條碼" type="text" value="">
+            </div>
+            <div class="buttonWrapper pure-u-5-24 guiPreferencesButtonSaveWrapper" style="display: inline-block;">
+                <button class="pure-button pure-button-10 green pure-button-transparent" id="btnUpdateGuiGovernmentIdCode" onclick="saveGovernmentIdCode();" type="button">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">儲存</font>
+                    </font>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="errorValidationGovernmentId" class="guiPreferencesErrorMessage">請輸入自然人憑證條碼</div>
+    <div id="errorGeneralGovernmentId" class="guiPreferencesErrorMessage">無法儲存</div>
+    <div id="successGovernmentId" class="guiPreferencesSuccessMessage">儲存成功</div>
+
+
+    <div class="guiPreferenceBodyLines">捐贈碼</div>
+
+    <div class="pure-g">
+        <div class="pure-u-24-24">
+            <div class="pure-u-19-24">
+                <input list="ctrlGuiDonationCodeSearch" class="guiPreferencesInput" placeholder="請輸入捐贈碼" name="ctrlGuiDonationCodeSearch">
+                <datalist id="ctrlGuiDonationCodeSearch" class="guiPreferencesInput"> </datalist>
+            </div>
+            <div class="buttonWrapper pure-u-5-24 guiPreferencesButtonSaveWrapper" style="display: inline-block;">
+                <button class="pure-button pure-button-10 green pure-button-transparent" id="btnUpdateGuiDonationCode" onclick="saveDonationCode();" type="button">
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">儲存</font>
+                    </font>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="errorValidationDonationCode" class="guiPreferencesErrorMessage">請輸入捐贈碼</div>
+    <div id="errorGeneralDonationCode" class="guiPreferencesErrorMessage">無法儲存</div>
+    <div id="successDonationCode" class="guiPreferencesSuccessMessage">儲存成功</div>
+
+
+    <div class="guiPreferencesButtonReturnWrapper">
+        <button class="pure-button pure-button-10 pure-button-green guiPreferencesButtonReturn" id="btnRedirectFormerPage" onclick="goToAccountPage()" type="button">
+                <font style="vertical-align: inherit;">返回</font>
+        </button>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var $donationCodeJson;
+    var $donationCodeSearchInput;
+    var $donationCodeSearchDdl;
+    var $carrierCodeInput;
+    var $governmentIdCodeInput;
+
+    var $CarrierCodeBtn;
+    var $GovernmentIdCodeBtn;
+    var $DonationCodeBtn;
+
+    var $CarrierCodeHdn;
+    var $GovernmentIdCodeHdn;
+    var $DonationCodeHdn;
+    var $CarrierRegexHdn;
+    var $GovernmentIdRegexHdn;
+    var $DonationCodeListHdn;
+    var $RedirectPathHdn;
+    var $RedirectNameHdn;
+
+    var $ErrorValidationCarrierCode;
+    var $ErrorValidationGovernmentId;
+    var $ErrorValidationDonationCode;
+    var $ErrorGeneralCarrierCode;
+    var $ErrorGeneralGovernmentId;
+    var $ErrorGeneralDonationCode;
+    var $SuccessCarrierCode;
+    var $SuccessGovernmentId;
+    var $SuccessDonationCode;
+
+
+    $(document).ready(function () {
+
+            $donationCodeJson;
+            $donationCodeSearchInput = $("[name=ctrlGuiDonationCodeSearch]");
+            $donationCodeSearchDdl = $("#ctrlGuiDonationCodeSearch");
+            $carrierCodeInput = $("#txtGuiCarrierCode");
+            $governmentIdCodeInput = $("#txtGuiGovernmentIdCode");
+
+            $CarrierCodeBtn = $("#btnUpdateGuiCarrierCode");
+            $GovernmentIdCodeBtn = $("#btnUpdateGuiGovernmentIdCode");
+            $DonationCodeBtn = $("#btnUpdateGuiDonationCode");
+            $RedirectBtn = $("#btnRedirectFormerPage");
+
+            $CarrierCodeHdn = $("#hdnPhoneCode");
+            $GovernmentIdCodeHdn = $("#hdnCitizenIdentificationCode");
+            $DonationCodeHdn = $("#hdnDonationCode");
+            $CarrierRegexHdn = $("#hdnCarrierRegex");
+            $GovernmentIdRegexHdn = $("#hdnGovernmentIdRegex");
+            $DonationCodeListHdn = $("#hdnDonationCodeListJson");
+            $RedirectPathHdn = $("#hdnRedirectPath");
+            $RedirectNameHdn = $("#hdnRedirectName");
+
+            $ErrorValidationCarrierCode = $("#errorValidationCarrierCode");
+            $ErrorValidationGovernmentId = $("#errorValidationGovernmentId");
+            $ErrorValidationDonationCode = $("#errorValidationDonationCode");
+            $ErrorGeneralCarrierCode = $("#errorGeneralCarrierCode");
+            $ErrorGeneralGovernmentId = $("#errorGeneralGovernmentId");
+            $ErrorGeneralDonationCode = $("#errorGeneralDonationCode");
+            $SuccessCarrierCode = $("#successCarrierCode");
+            $SuccessGovernmentId = $("#successGovernmentId");
+            $SuccessDonationCode = $("#successDonationCode");
+
+            $ErrorValidationCarrierCode.hide();
+            $ErrorValidationGovernmentId.hide();
+            $ErrorValidationDonationCode.hide();
+            $ErrorGeneralCarrierCode.hide();
+            $ErrorGeneralGovernmentId.hide();
+            $ErrorGeneralDonationCode.hide();
+            $SuccessCarrierCode.hide();
+            $SuccessGovernmentId.hide();
+            $SuccessDonationCode.hide();
+
+            $donationCodeSearchInput.val($DonationCodeHdn.val());
+            $carrierCodeInput.val($CarrierCodeHdn.val());
+            $governmentIdCodeInput.val($GovernmentIdCodeHdn.val());
+            $RedirectBtn.text($RedirectNameHdn.val());
+
+            $donationCodeSearchInput.on('input', function () {
+                if ($donationCodeSearchInput.val() != $DonationCodeHdn.val()) {
+                    searchDonationCode();
+                }
+            });
+
+            $carrierCodeInput.on('input', function () {
+                resetNonValidationMessages(SaveEnum.CarrierCode);
+                resetSuccessMessages(SaveEnum.CarrierCode);
+                if ($CarrierCodeHdn.val() != $carrierCodeInput.val()
+                    && $carrierCodeInput.val().match(new RegExp($CarrierRegexHdn.val(), "i"))) {
+                    resetValidationMessages(SaveEnum.CarrierCode);
+                }
+            });
+
+            $governmentIdCodeInput.on('input', function () {
+                resetNonValidationMessages(SaveEnum.GovernmentId);
+                resetSuccessMessages(SaveEnum.GovernmentId);
+                if ($GovernmentIdCodeHdn.val() != $governmentIdCodeInput.val()
+                    && $governmentIdCodeInput.val().match($GovernmentIdRegexHdn.val())) {
+                    resetValidationMessages(SaveEnum.GovernmentId);
+                }
+        });
+            $("#js-progress-spinner").hide();
+    });
+
+
+    function saveCarrierCode() {
+        if ($CarrierCodeHdn.val() != $carrierCodeInput.val()) {
+            SaveGovernmentUniformInvoiceCode($carrierCodeInput.val(), 1);
+        }
+        else {
+
+            showSuccessMessage(SaveEnum.CarrierCode);
+        }
+    }
+
+    function saveGovernmentIdCode() {
+        if ($GovernmentIdCodeHdn.val() != $governmentIdCodeInput.val()) {
+            SaveGovernmentUniformInvoiceCode($governmentIdCodeInput.val(), 2);
+        }
+        else {
+            showSuccessMessage(SaveEnum.GovernmentId);
+        }
+    }
+
+    function saveDonationCode() {
+        if ($DonationCodeHdn.val() != $donationCodeSearchInput.val()) {
+            SaveDonationCode($donationCodeSearchInput.val());
+        }
+        else {
+            showSuccessMessage(SaveEnum.DonationCode);
+        }
+    }
+
+    function searchDonationCode() {
+        resetNonValidationMessages(SaveEnum.DonationCode);
+        resetSuccessMessages(SaveEnum.DonationCode);
+        if ($donationCodeSearchInput.val().length >= 3) {
+            if (typeof $donationCodeJson == 'undefined') {
+                var donationCodeListJson = jQuery.parseJSON($DonationCodeListHdn.val());
+
+                $donationCodeJson = $.map(donationCodeListJson, function (value, key) {
+                    var donationName = value.split(" ")[1];
+                    return {
+                        LoveCode: key,
+                        SocialWelfareName: donationName
+                    }
+                });
+            }
+
+            var regEx = new RegExp($donationCodeSearchInput.val(), "i");
+            var count = 0;
+            var donationCodeId;
+            var options;
+            $donationCodeSearchDdl.empty();
+
+            $.each($donationCodeJson, function (i, v) {
+
+                if (count < 50 && v.SocialWelfareName.search(regEx) != -1) {
+                    donationCodeId = v.LoveCode;
+                    if (count == 0) {
+                        options = "<option value='" + v.LoveCode + "'>" + v.SocialWelfareName + "</option>";
+                    }
+                    else if (count > 0) {
+                        options = options + "<option value='" + v.LoveCode + "'>" + v.SocialWelfareName + "</option>";
+                    }
+                    count++;
+                    return;
+                }
+                else if (count < 50 && v.LoveCode.search(regEx) != -1) {
+                    donationCodeId = v.LoveCode;
+                    if (count == 0) {
+                        options = "<option value='" + v.LoveCode + "'>" + v.SocialWelfareName + "</option>";
+                    }
+                    else if (count > 0) {
+                        options = options + "<option value='" + v.LoveCode + "'>" + v.SocialWelfareName + "</option>";
+                    }
+                    count++;
+                    return;
+                }
+
+            });
+
+            if (count == 1 && donationCodeId == $donationCodeSearchInput.val()) {
+                resetValidationMessages(SaveEnum.DonationCode);
+            }
+            else if (count >= 1) {
+                $donationCodeSearchDdl.append(options);
+            }
+        }
+    }
+
+    function SaveGovernmentUniformInvoiceCode(codeValue, codeType) {
+        $.ajax({
+            type: "POST",
+            url: "/MyAccount/AccountPreferences/SaveGovernmentUniformInvoiceCode",
+            cache: false,
+            data: { guiCarrierType: codeType, guiValue: codeValue }
+        }).done(function (response) {
+            if (response.Success) {
+                showSuccessMessage(codeType);
+            }
+            if (!response.Success) {
+                if (response.ErrorMessage == "Validation") {
+                    showValidationMessage(codeType);
+                }
+                else {
+                    showGeneralErrorMessage(codeType);
+                }
+            }
+        }).fail(function () {
+            showGeneralErrorMessage(codeType);
+        });
+    }
+
+    function SaveDonationCode(codeValue) {
+        $.ajax({
+            type: "POST",
+            url: "/MyAccount/AccountPreferences/SaveGovernmentUniformInvoiceDonationCode",
+            cache: false,
+            data: { guiValue: codeValue }
+        }).done(function (response) {
+            if (response.Success) {
+                showSuccessMessage(SaveEnum.DonationCode);
+            }
+            if (!response.Success) {
+                if (response.ErrorMessage == "Validation") {
+                    showValidationMessage(SaveEnum.DonationCode);
+                }
+                else {
+                    showGeneralErrorMessage(SaveEnum.DonationCode);
+                }
+            }
+        }).fail(function () {
+            showGeneralErrorMessage(SaveEnum.DonationCode);
+        });
+    }
+
+    function goToAccountPage() {
+        window.location.href = $RedirectPathHdn.val();
+    }
+
+    var SaveEnum = { "CarrierCode": 1, "GovernmentId": 2, "DonationCode": 0 };
+    Object.freeze(SaveEnum)
+
+    function showSuccessMessage(codeType) {
+
+        resetNonValidationMessages(codeType);
+        resetValidationMessages(codeType);
+
+        switch (codeType) {
+            case 1:
+                $SuccessCarrierCode.show();
+                break;
+            case 2:
+                $SuccessGovernmentId.show();
+                break;
+            case 0:
+                $SuccessDonationCode.show();
+                break;
+            default:
+                break;
+        }
+    }
+
+    function showValidationMessage(codeType) {
+
+        resetNonValidationMessages(codeType);
+        resetSuccessMessages(codeType);
+
+        switch (codeType) {
+            case 1:
+                $ErrorValidationCarrierCode.show();
+                if (!$carrierCodeInput.hasClass('guiPreferencesInputError')) {
+                    $carrierCodeInput.addClass('guiPreferencesInputError')
+                }
+                if ($carrierCodeInput.hasClass('guiPreferencesInput')) {
+                    $carrierCodeInput.removeClass('guiPreferencesInput')
+                }
+                break;
+            case 2:
+                $ErrorValidationGovernmentId.show();
+                if (!$governmentIdCodeInput.hasClass('guiPreferencesInputError')) {
+                    $governmentIdCodeInput.addClass('guiPreferencesInputError')
+                }
+                if ($governmentIdCodeInput.hasClass('guiPreferencesInput')) {
+                    $governmentIdCodeInput.removeClass('guiPreferencesInput')
+                }
+                break;
+            case 0:
+                $ErrorValidationDonationCode.show();
+                if (!$donationCodeSearchInput.hasClass('guiPreferencesInputError')) {
+                    $donationCodeSearchInput.addClass('guiPreferencesInputError')
+                }
+                if ($donationCodeSearchInput.hasClass('guiPreferencesInput')) {
+                    $donationCodeSearchInput.removeClass('guiPreferencesInput')
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    function showGeneralErrorMessage(codeType) {
+
+        resetValidationMessages(codeType);
+        resetSuccessMessages(codeType);
+
+        switch (codeType) {
+            case 1:
+                $ErrorGeneralCarrierCode.show();
+                if (!$carrierCodeInput.hasClass('guiPreferencesInputError')) {
+                    $carrierCodeInput.addClass('guiPreferencesInputError')
+                }
+                if ($carrierCodeInput.hasClass('guiPreferencesInput')) {
+                    $carrierCodeInput.removeClass('guiPreferencesInput')
+                }
+                break;
+            case 2:
+                $ErrorGeneralGovernmentId.show();
+                if (!$governmentIdCodeInput.hasClass('guiPreferencesInputError')) {
+                    $governmentIdCodeInput.addClass('guiPreferencesInputError')
+                }
+                if ($governmentIdCodeInput.hasClass('guiPreferencesInput')) {
+                    $governmentIdCodeInput.removeClass('guiPreferencesInput')
+                }
+                break;
+            case 0:
+                $ErrorGeneralDonationCode.show();
+                if (!$donationCodeSearchInput.hasClass('guiPreferencesInputError')) {
+                    $donationCodeSearchInput.addClass('guiPreferencesInputError')
+                }
+                if ($donationCodeSearchInput.hasClass('guiPreferencesInput')) {
+                    $donationCodeSearchInput.removeClass('guiPreferencesInput')
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    function resetNonValidationMessages(codeType) {
+
+        switch (codeType) {
+            case 1:
+                $ErrorGeneralCarrierCode.hide();
+                $SuccessCarrierCode.hide();
+                if ($carrierCodeInput.hasClass('guiPreferencesInputError')) {
+                    $carrierCodeInput.removeClass('guiPreferencesInputError')
+                }
+                if (!$carrierCodeInput.hasClass('guiPreferencesInput')) {
+                    $carrierCodeInput.addClass('guiPreferencesInput')
+                }
+                break;
+            case 2:
+                $ErrorGeneralGovernmentId.hide();
+                $SuccessGovernmentId.hide();
+                if ($governmentIdCodeInput.hasClass('guiPreferencesInputError')) {
+                    $governmentIdCodeInput.removeClass('guiPreferencesInputError')
+                }
+                if (!$governmentIdCodeInput.hasClass('guiPreferencesInput')) {
+                    $governmentIdCodeInput.addClass('guiPreferencesInput')
+                }
+                break;
+            case 0:
+                $ErrorGeneralDonationCode.hide();
+                $SuccessDonationCode.hide();
+                if ($donationCodeSearchInput.hasClass('guiPreferencesInputError')) {
+                    $donationCodeSearchInput.removeClass('guiPreferencesInputError')
+                }
+                if (!$donationCodeSearchInput.hasClass('guiPreferencesInput')) {
+                    $donationCodeSearchInput.addClass('guiPreferencesInput')
+                }
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    function resetSuccessMessages(codeType) {
+
+        switch (codeType) {
+            case 1:
+                $SuccessCarrierCode.hide();
+                break;
+            case 2:
+                $SuccessGovernmentId.hide();
+                break;
+            case 0:
+                $SuccessDonationCode.hide();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    function resetValidationMessages(codeType) {
+
+        switch (codeType) {
+            case 1:
+                $ErrorValidationCarrierCode.hide();
+                if ($carrierCodeInput.hasClass('guiPreferencesInputError')) {
+                    $carrierCodeInput.removeClass('guiPreferencesInputError')
+                }
+                if (!$carrierCodeInput.hasClass('guiPreferencesInput')) {
+                    $carrierCodeInput.addClass('guiPreferencesInput')
+                }
+                break;
+            case 2:
+                $ErrorValidationGovernmentId.hide();
+                if ($governmentIdCodeInput.hasClass('guiPreferencesInputError')) {
+                    $governmentIdCodeInput.removeClass('guiPreferencesInputError')
+                }
+                if (!$governmentIdCodeInput.hasClass('guiPreferencesInput')) {
+                    $governmentIdCodeInput.addClass('guiPreferencesInput')
+                }
+                break;
+            case 0:
+                $ErrorValidationDonationCode.hide();
+                if ($donationCodeSearchInput.hasClass('guiPreferencesInputError')) {
+                    $donationCodeSearchInput.removeClass('guiPreferencesInputError')
+                }
+                if (!$donationCodeSearchInput.hasClass('guiPreferencesInput')) {
+                    $donationCodeSearchInput.addClass('guiPreferencesInput')
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+</script>
