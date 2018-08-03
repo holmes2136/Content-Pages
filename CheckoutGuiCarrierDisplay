@@ -258,7 +258,7 @@
             }
 
             if(GuiCarrier.DonationCodeFromDB  !== ''){
-                if(GuiCarrier.CustomerDonationOrganization !== GuiCarrier.DonationOrganizationFromCache){
+                if(GuiCarrier.DonationOrganizationFromDB !== GuiCarrier.DonationOrganizationFromService){
                     $("#errorDisplay").html('原設定捐贈碼或受捐贈機關或團體已變更 , 請點選"設定載具條碼及捐贈碼"進行捐贈碼設定更新 , 或選擇美樂家會員載具 , 謝謝!');
                     $("#errorDisplay").show();
                 }
