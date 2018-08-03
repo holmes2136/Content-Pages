@@ -248,14 +248,16 @@
             //Citizen carrier initial
             $("#citizenCarrier").val(GuiCarrier.CustomerGuiCarriers[GuiCarrierType.CitizenDigitalCertificate.id]);
             //Donne initial
-            $("#donneDisplay").text($.format("{0} {1}",GuiCarrier.CustomerDonationCode , GuiCarrier.CustomerDonationOrganization));
+            if(GuiCarrier.DonationCodeFromDB && GuiCarrier.DonationOrganizationFromDB){
+               $("#donneDisplay").text($.format("{0} {1}",GuiCarrier.DonationCodeFromDB , GuiCarrier.DonationOrganizationFromDB));    
+            }
     
-            if(GuiCarrier.CustomerDonationCode === ''){
+            if(GuiCarrier.DonationCodeFromDB  === ''){
                 $("#comment_container").hide();
                 $("#isDonne").prop('disabled',true);
             }
 
-            if(GuiCarrier.CustomerDonationCode !== ''){
+            if(GuiCarrier.DonationCodeFromDB  !== ''){
                 if(GuiCarrier.CustomerDonationOrganization !== GuiCarrier.DonationOrganizationFromCache){
                     $("#errorDisplay").html('原設定捐贈碼或受捐贈機關或團體已變更 , 請點選"設定載具條碼及捐贈碼"進行捐贈碼設定更新 , 或選擇美樂家會員載具 , 謝謝!');
                     $("#errorDisplay").show();
@@ -268,6 +270,8 @@
             //Default option is Melaleuca carrier
             $("#guiCarrierType").val(GuiCarrierType.MelaleucaMembership.id);
             $("#isDonne").prop("checked", false);
+            
+             IsShowReminder();
         }
         Checkout.PaymethodSubmit.validate = function () {
             if ($("#isDonne").is(":checked") && $("#donneDisplay").text() === "") {
@@ -311,7 +315,18 @@
             return true;
         }
 
-
+ function IsShowReminder(){
+            
+            $("#isDonne").change(function() {
+                if(this.checked) {
+                    $("#comment_container").show();
+                }
+                else{
+                    $("#comment_container").hide();
+                }
+            });
+        }
+        
 function GoToManageGuiInformationPage(){
         window.location.href='/MyAccount/AccountPreferences/GovernmentUniformInvoicePreferences?r=checkout';
 
