@@ -336,6 +336,8 @@
             $("#guiCarrierType").val(GuiCarrierType.MelaleucaMembership.id);
 
             $("#isDonne").prop('checked', false);
+	    
+	    IsShowReminder();
         }
 
         Checkout.PaymethodSubmit.validate = function () {
@@ -388,7 +390,19 @@
 
             return true;
         }
-		
+	
+	 function IsShowReminder(){
+            
+            $("#isDonne").change(function() {
+                if(this.checked) {
+                    $("#comment_container").show();
+                }
+                else{
+                    $("#comment_container").hide();
+                }
+            });
+        }
+	
 		function GoToManageGuiInformationPage(){
 			window.location.href='/MyAccount/AccountPreferences/GovernmentUniformInvoicePreferences?r=checkout';
 		}	
