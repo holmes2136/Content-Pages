@@ -1,124 +1,105 @@
-<div class="pure-u-1" id="guiCarrierContainer">
-                <div id="GuiSection">
-                    <div class="GuiHeader"><h3>發票資訊</h3></div>
-                    <ul class="gui">
+<div id="GuiSection">
+            <div class="GuiHeader"><h3>發票資訊</h3></div>
+            <ul class="gui">
+                <li>
+                    <label for="carrier" class="container">
+                        <input type="checkbox" name="carrier" id="carrier" onclick="changeCarrier(this);">
+                        載具發票
+                        <br>
+                        <span class="checkmark"></span>
+                    </label>
+                    <ul id="web_area">
                         <li>
-                            <label for="carrier" class="carrierLabel" style="padding-left:35px;">
-                                <input type="checkbox" name="carrier" id="carrier" onclick="changeCarrier(this);">
-                                載具發票
-                                <br>
-                                <span class="checkmark"></span>
+                            <!-- Melaleuca Carrier -->
+                            <input type="radio" id="carrier_Melaleuca" onclick="changeCarrier(this);" checked="checked">
+                            <label for="carrier_Melaleuca">
+                                <span class="icon">
+                                    <span class="radio-span"></span>
+                                </span>
+                                <span>
+                                    美樂家會員載具
+                                </span>
                             </label>
-                            <div id="web_area">
-                                <div class="carrierOption">
-                                    <!-- Melaleuca Carrier -->
-                                    <input type="radio" id="carrier_Melaleuca" onclick="changeCarrier(this);" checked="checked">
-                                    <label for="carrier_Melaleuca">
-                                        <span class="icon">
-                                            <span class="radio-span"></span>
-                                        </span>
-                                        <span>
-                                            美樂家會員載具
-                                        </span>
-                                    </label>
-                                </div>
-                                <div class="carrierOption">
-                                    <!-- Mobile Carrier -->
-                                    <input type="radio" id="carrier-mobile" onclick="changeCarrier(this);">
-                                    <label for="carrier-mobile">
-                                        <span class="icon">
-                                            <span class="radio-span"></span>
-                                        </span>
-                                        <span>手機條碼載具</span>
-                                    </label>
-                                    <div id="mobileCarrierSection">
-                                        <div>
-                                            <input type="text" name="mobileCarrier" id="mobileCarrier" class="labelLike">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carrierOption">
-                                    <!-- Citizen Carrier -->
-                                    <input type="radio" id="carrier-Citizen" onclick="changeCarrier(this);">
-                                    <label for="carrier-Citizen">
-                                        <span class="icon">
-                                            <span class="radio-span"></span>
-                                        </span>
-                                        <span>自然人憑證載具</span>
-                                    </label>
-                                    <div id="citizenCarrierSection">
-                                        <div>
-                                            <input type="text" name="citizenCarrier" id="citizenCarrier" class="labelLike">
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
                         </li>
-                        <!-- Donne -->
                         <li>
-                            <label for="isDonne" class="carrierLabel" style="">
-                                <input type="checkbox" id="isDonne" onclick="changeCarrier(this)">
-                                <span class="icon"></span>
-                                <div style="float:left;width:100%">
-                                    <span style="padding-left:35px;float:left">捐贈碼</span>
-                                    <div id="donneDisplay" class="labelLike"></div>
-                                </div>
-                                <span class="checkmark"></span>
-                                <div id="comment_container">
-                                    <p class="comment">捐贈提醒 : 發票一旦捐贈後無法更改發票類型,捐贈 </p>
-                                    <p class="comment">發票不影響退換貨權益</p>
-                                </div>
+                            <!-- Mobile Carrier -->
+                            <input type="radio" id="carrier-mobile" onclick="changeCarrier(this);">
+                            <label for="carrier-mobile">
+                                <span class="icon">
+                                    <span class="radio-span"></span>
+                                </span>
+                                <span>手機條碼載具</span>
                             </label>
+                            <div id="mobileCarrierSection">
+                                <div>
+                                    <input type="text" style="width: 80px;" name="mobileCarrier" id="mobileCarrier" size="10" maxlength="8" class="labelLike" value="">
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- Citizen Carrier -->
+                            <input type="radio" id="carrier-Citizen" onclick="changeCarrier(this);">
+                            <label for="carrier-Citizen">
+                                <span class="icon">
+                                    <span class="radio-span"></span>
+                                </span>
+                                <span>自然人憑證載具</span>
+                            </label>
+                            <div id="citizenCarrierSection">
+                                <div>
+                                    <input type="text" name="citizenCarrier" id="citizenCarrier" class="labelLike">
+                                </div>
+                            </div>
                         </li>
                     </ul>
-                    <div id="errorDisplay"></div>
+                </li>
+                <!-- Donne -->
+                <li>
+                    <label for="isDonne" class="container">
+                        <input type="checkbox" id="isDonne" onclick="changeCarrier(this)">
+                        <span class="icon"></span>
+                        <div style="float:left;width:30%">
+                            <span style="float:left;width:23%;">捐贈碼</span>
+                            <div id="donneDisplay" class="labelLike"></div>
+                        </div>
+                        <span class="checkmark"></span>
+                        <div id="comment_container">
+                            <p class="comment">捐贈提醒 : 發票一旦捐贈後無法更改發票類型 , </p>
+                            <p class="comment">捐贈發票不影響退換貨權益</p>
+                        </div>
+                    </label>
+                </li>
+            </ul>
+            <div id="errorDisplay"></div>
+            <button class="pure-button pure-button-blue" id="btnChangeCarrier" onclick="GoToManageGuiInformationPage()" type="button">設定載具條碼及捐贈碼</button>
+            <input type="hidden" id="guiCarrierType" />
+        </div>
 
-                    <button class="btn btn--secondary btn--full pure-button pure-button-white" id="btnChangeCarrier" onclick="GoToManageGuiInformationPage();" type="button">設定載具條碼及捐贈碼</button>
-                    <input type="hidden" id="guiCarrierType" />
-                </div>
 
-            </div>
-<style>
-
-        #guiCarrierContainer {
-            border-top: 5px solid #eee;
-            padding: 10px;
-            background: white;
-        }
-
-        #carrierLabel {
-            padding: 0.3rem 08rem;
-        }
-
+        <style>
         #paymentSection {
             width: 30%;
             float: left;
             height: 100px;
         }
-
             #paymentSection .order-options-shipping-handling-wrapper {
                 float: left;
                 padding-top: 20px;
                 clear: both;
             }
-
             #paymentSection .order-options-payment-wrapper {
                 float: left;
                 width: 75%;
             }
-
             #paymentSection .order-options-shipping-handling-wrapper {
                 float: left;
                 padding-top: 20px;
                 clear: both
             }
-
         #GuiSection {
-           padding:4px;
+            float: right;
+            width: 33%;
         }
-
         .GuiHeader {
             width: 98%;
             margin-bottom: 5px;
@@ -126,7 +107,6 @@
             padding-bottom: 5px;
             margin-left: 0;
         }
-
         #errorDisplay {
             font-size: 13px;
             padding-left: 35px;
@@ -134,9 +114,8 @@
             color: red;
             display: none;
             float: left;
-            width: 100%
+            width: 80%
         }
-
         .labelLike {
             background: transparent;
             border: none;
@@ -144,55 +123,48 @@
             -webkit-box-shadow: none;
             -moz-box-shadow: none;
         }
-
         span.radio-span {
             display: inline-block;
-            width: 16px;
-            height: 17px;
+            width: 12px;
+            height: 10px;
             border: 3px solid #fff;
             border-radius: 50%;
             box-shadow: 0px 0px 0px 1px #b3b1b1;
             background-color: #ececec;
             vertical-align: middle;
-            cursor: pointer;
+            cursor:pointer;
         }
-
         .gui li input[type="checkbox"] {
             display: none;
         }
-
         #web_area {
-            padding: 2px 0px 8px 36px;
+            padding-left: 36px;
         }
-
-            #web_area  input[type="radio"] {
-                display: none;
+        #web_area li input[type="radio"] {
+            display: none;
+        }
+            #web_area li input[type="radio"]:checked + label span.radio-span {
+                box-shadow: 0px 0px 0px 1px #b3b1b1;
+                background-color: green;
             }
-
-                #web_area  input[type="radio"]:checked + label span.radio-span {
-                    box-shadow: 0px 0px 0px 1px #b3b1b1;
-                    background-color: green;
-                }
-
-        .carrierLabel {
-            /*display: block;*/
+        #web_area li {
+            height: 25px;
+        }
+        .container {
+            display: block;
             position: relative;
-            /*padding-left: 35px;*/
-            padding-left: 0px;
+            padding-left: 35px;
             margin-bottom: 12px;
             cursor: pointer;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            padding-top: 5px;
         }
-
-            .carrierLabel input {
+            .container input {
                 font-size: 14px;
                 color: #656262;
             }
-
         .checkmark {
             position: absolute;
             top: 0;
@@ -201,28 +173,21 @@
             width: 20px;
             background-color: #eee;
         }
-
-
-        .carrierLabel:hover input ~ .checkmark {
+        .container:hover input ~ .checkmark {
             background-color: #ccc;
         }
-
-        .carrierLabel input:checked ~ .checkmark {
-            background-color: green;
+        .container input:checked ~ .checkmark {
+            background-color: #828080;
         }
-
-
         .checkmark:after {
             content: "";
             position: absolute;
             display: none;
         }
-
-        .carrierLabel input:checked ~ .checkmark:after {
+        .container input:checked ~ .checkmark:after {
             display: block;
         }
-
-        .carrierLabel .checkmark:after {
+        .container .checkmark:after {
             left: 6px;
             top: 2px;
             width: 5px;
@@ -233,178 +198,124 @@
             -ms-transform: rotate(45deg);
             transform: rotate(45deg);
         }
-
         #GuiSection label {
             font-size: 13px;
         }
-
         #citizenCarrier {
-            color: #696464;
+            width: 115px;
         }
-
         .comment {
-            font-size: 11px;
+            font-size:11px;
         }
-
         #comment_container {
             float: left;
-            /*width: 100%;*/
-            padding-top:12px;
-            padding-left:35px;
+            width: 100%;
         }
-
         #mobileCarrierSection {
             padding-top: 0px;
             display: inline-block;
         }
-
-        #mobileCarrier {
-            width: 80px;
-            color: #696464;
-        }
-
         #citizenCarrierSection {
             padding-top: 0px;
             display: inline-block;
         }
-
         #donneDisplay {
             width: 70%;
             color: #8a8282;
             float: left;
-            padding-left: 20px;
         }
-
         #btnChangeCarrier {
-            margin-top: 20px;
+            margin-top:12px;
             float: left;
-            width: 100%;
-            padding-bottom:30px;
+            width: 50%;
         }
-
-        .carrierOption {
-            margin-bottom:5px;
-        }
-</style>
-	
-<script type="text/javascript">
-
+    </style>
+        <script type="text/javascript">
         $(document).ready(function () {
             setup();
         });
-
         var GuiCarrierType = Object.freeze(
-            {
-                Undefined: { "id": "0", "description": "" },
-                MobileCarrier: { "id": "1", "description": "MobileCarrier" },
-                CitizenDigitalCertificate: { "id": "2", "description": "CitizenDigitalCertificate" },
-                MelaleucaMembership: { "id": "3", "description": "MelaleucaMembership" }
-            });
-
+        {
+            Undefined: { "id": "0", "description": "" },
+            MobileCarrier: { "id": "1", "description": "MobileCarrier" },
+            CitizenDigitalCertificate: { "id": "2", "description": "CitizenDigitalCertificate" },
+            MelaleucaMembership: { "id": "3", "description": "MelaleucaMembership" }
+        });
         function setup() {
-
             var GuiCarrier = GuiCarrierInformation;
-
             //Mobile carrier initial
             $("#mobileCarrier").val(GuiCarrier.CustomerGuiCarriers[GuiCarrierType.MobileCarrier.id]);
-
             //Citizen carrier initial
             $("#citizenCarrier").val(GuiCarrier.CustomerGuiCarriers[GuiCarrierType.CitizenDigitalCertificate.id]);
-
             //Donne initial
-	    if(GuiCarrier.DonationCodeFromDB && GuiCarrier.DonationOrganizationFromDB){
-               $("#donneDisplay").text($.format("{0} {1}",GuiCarrier.DonationCodeFromDB , GuiCarrier.DonationOrganizationFromDB));    
-            }
-        
-	    if (GuiCarrier.DonationCodeFromDB === ''){
+            $("#donneDisplay").text($.format("{0} {1}",GuiCarrier.CustomerDonationCode , GuiCarrier.CustomerDonationOrganization));
+    
+            if(GuiCarrier.CustomerDonationCode === ''){
                 $("#comment_container").hide();
                 $("#isDonne").prop('disabled',true);
             }
-			
-			 //Validate diff between customer donation and  donation from cache
-            if (GuiCarrier.DonationCodeFromDB !== ''){
-                if(GuiCarrier.DonationOrganizationFromDB !== GuiCarrier.DonationOrganizationFromService){
+
+            if(GuiCarrier.CustomerDonationCode !== ''){
+                if(GuiCarrier.CustomerDonationOrganization !== GuiCarrier.DonationOrganizationFromCache){
                     $("#errorDisplay").html('原設定捐贈碼或受捐贈機關或團體已變更 , 請點選"設定載具條碼及捐贈碼"進行捐贈碼設定更新 , 或選擇美樂家會員載具 , 謝謝!');
                     $("#errorDisplay").show();
                 }
             }
-			
+            
             //check the carrier option
-            $("#carrier").prop('checked', true);
-			$("#carrier").prop('disabled', true);
-				  
+            $("#carrier").prop("checked", true);
+            $("#carrier").prop('disabled',true);
             //Default option is Melaleuca carrier
             $("#guiCarrierType").val(GuiCarrierType.MelaleucaMembership.id);
-
-            $("#isDonne").prop('checked', false);
-	    
-	    IsShowReminder();
+            $("#isDonne").prop("checked", false);
         }
-
         Checkout.PaymethodSubmit.validate = function () {
-
             if ($("#isDonne").is(":checked") && $("#donneDisplay").text() === "") {
                 return false;
-            }       
+            }
             return true;
         };
-
         Checkout.PaymethodSubmit.populateJson = function () {
             var donneValue = "";
-
             if ($("#isDonne").is(":checked")) {
                 donneValue = $("#donneDisplay").text();
             }
             else {
                 donneValue = "";
             }
-
             var json = {
                 GUICarrierType: $("#guiCarrierType").val(),
                 GUIDoneeValue: donneValue
             };
-
             return json;
         };
-
         function changeCarrier(carrier) {
-
             var carrierType = carrier.id;
-
             switch (carrierType) {
-                case 'carrier_Melaleuca':
+                case "carrier_Melaleuca":
                     $("#carrier-mobile").prop("checked", false);
                     $("#carrier-Citizen").prop("checked", false);
                     $("#guiCarrierType").val(GuiCarrierType.MelaleucaMembership.id);
                     break;
-                case 'carrier-mobile':
+                case "carrier-mobile":
                     $("#carrier-Citizen").prop("checked", false);
                     $("#carrier_Melaleuca").prop("checked", false);
                     $("#guiCarrierType").val(GuiCarrierType.MobileCarrier.id);
                     break;
-                case 'carrier-Citizen':
+                case "carrier-Citizen":
                     $("#carrier-mobile").prop("checked", false);
                     $("#carrier_Melaleuca").prop("checked", false);
                     $("#guiCarrierType").val(GuiCarrierType.CitizenDigitalCertificate.id);
                     break;
             }
-
             return true;
         }
-	
-	 function IsShowReminder(){
-            
-            $("#isDonne").change(function() {
-                if(this.checked) {
-                    $("#comment_container").show();
-                }
-                else{
-                    $("#comment_container").hide();
-                }
-            });
-        }
-	
-		function GoToManageGuiInformationPage(){
-			window.location.href='/MyAccount/AccountPreferences/GovernmentUniformInvoicePreferences?r=checkout';
-		}	
+
+
+function GoToManageGuiInformationPage(){
+        window.location.href='/MyAccount/AccountPreferences/GovernmentUniformInvoicePreferences?r=checkout';
+
+    }
+
+
     </script>
