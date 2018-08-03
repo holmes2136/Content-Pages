@@ -312,9 +312,11 @@
             $("#citizenCarrier").val(GuiCarrier.CustomerGuiCarriers[GuiCarrierType.CitizenDigitalCertificate.id]);
 
             //Donne initial
-            $("#donneDisplay").text($.format("{0} {1}",GuiCarrier.DonationCodeFromDB , GuiCarrier.DonationOrganizationFromDB));
-
-			if (GuiCarrier.DonationCodeFromDB === ''){
+	    if(GuiCarrier.DonationCodeFromDB && GuiCarrier.DonationOrganizationFromDB){
+               $("#donneDisplay").text($.format("{0} {1}",GuiCarrier.DonationCodeFromDB , GuiCarrier.DonationOrganizationFromDB));    
+            }
+        
+	    if (GuiCarrier.DonationCodeFromDB === ''){
                 $("#comment_container").hide();
                 $("#isDonne").prop('disabled',true);
             }
