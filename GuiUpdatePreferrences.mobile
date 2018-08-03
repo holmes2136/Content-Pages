@@ -141,12 +141,12 @@
     <div id="successGovernmentId" class="guiPreferencesSuccessMessage">儲存成功</div>
 
 
-    <div class="guiPreferenceBodyLines">捐贈愛心碼</div>
+    <div class="guiPreferenceBodyLines">捐贈碼</div>
 
     <div class="pure-g">
         <div class="pure-u-24-24">
             <div class="pure-u-19-24">
-                <input list="ctrlGuiDonationCodeSearch" class="guiPreferencesInput" placeholder="請輸入愛心碼" name="ctrlGuiDonationCodeSearch">
+                <input list="ctrlGuiDonationCodeSearch" class="guiPreferencesInput" placeholder="請輸入捐贈碼" name="ctrlGuiDonationCodeSearch">
                 <datalist id="ctrlGuiDonationCodeSearch" class="guiPreferencesInput"> </datalist>
             </div>
             <div class="buttonWrapper pure-u-5-24 guiPreferencesButtonSaveWrapper" style="display: inline-block;">
@@ -160,7 +160,7 @@
     </div>
 
 
-    <div id="errorValidationDonationCode" class="guiPreferencesErrorMessage">請輸入愛心碼</div>
+    <div id="errorValidationDonationCode" class="guiPreferencesErrorMessage">請輸入捐贈碼</div>
     <div id="errorGeneralDonationCode" class="guiPreferencesErrorMessage">無法儲存</div>
     <div id="successDonationCode" class="guiPreferencesSuccessMessage">儲存成功</div>
 
