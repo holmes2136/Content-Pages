@@ -96,7 +96,7 @@
 
 <div class="guiPreferencesPageWrapper">
 
-	<div class="guiPreferencesHeader">設定載具條碼及愛心碼</div>
+	<div class="guiPreferencesHeader">設定載具條碼及捐贈碼</div>
 	<table class="pure-table guiPreferencesTable">
 		<thead>
 			<tr>
@@ -128,9 +128,9 @@
 			<tr>
 				<td></td>
 				<td>
-					<div id="errorValidationCarrierCode" class="guiPreferencesErrorMessage">Validation Error Message</div>
-					<div id="errorGeneralCarrierCode" class="guiPreferencesErrorMessage">General Error Message</div>
-					<div id="successCarrierCode" class="guiPreferencesSuccessMessage">Success Message</div>
+					<div id="errorValidationCarrierCode" class="guiPreferencesErrorMessage">請輸入手機載具條碼</div>
+					<div id="errorGeneralCarrierCode" class="guiPreferencesErrorMessage">無法儲存</div>
+					<div id="successCarrierCode" class="guiPreferencesSuccessMessage">儲存成功</div>
 				</td>
 			</tr>
 
@@ -156,14 +156,14 @@
 			<tr>
 				<td></td>
 				<td>
-					<div id="errorValidationGovernmentId" class="guiPreferencesErrorMessage">Validation Error Message</div>
-					<div id="errorGeneralGovernmentId" class="guiPreferencesErrorMessage">General Error Message</div>
-					<div id="successGovernmentId" class="guiPreferencesSuccessMessage">Success Message</div>
+					<div id="errorValidationGovernmentId" class="guiPreferencesErrorMessage">請輸入自然人憑證條碼</div>
+					<div id="errorGeneralGovernmentId" class="guiPreferencesErrorMessage">無法儲存</div>
+					<div id="successGovernmentId" class="guiPreferencesSuccessMessage">儲存成功</div>
 				</td>
 			</tr>
 
 			<tr>
-				<td>捐贈愛心碼</td>
+				<td>捐贈碼</td>
 				<td>
 					<div class="pure-g">
 						<div class="pure-u-24-24">
@@ -185,9 +185,9 @@
 			<tr>
 				<td></td>
 				<td>
-					<div id="errorValidationDonationCode" class="guiPreferencesErrorMessage">Validation Error Message</div>
-					<div id="errorGeneralDonationCode" class="guiPreferencesErrorMessage">General Error Message</div>
-					<div id="successDonationCode" class="guiPreferencesSuccessMessage">Success Message</div>
+					<div id="errorValidationDonationCode" class="guiPreferencesErrorMessage">請輸入捐贈碼</div>
+					<div id="errorGeneralDonationCode" class="guiPreferencesErrorMessage">無法儲存</div>
+					<div id="successDonationCode" class="guiPreferencesSuccessMessage">儲存成功</div>
 				</td>
 			</tr>
 
