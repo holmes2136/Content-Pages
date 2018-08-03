@@ -194,7 +194,7 @@
 		</tbody>
 	</table>
 	<div class="guiPreferencesButtonReturnWrapper">
-		<button class="pure-button pure-button-10 pure-button-green guiPreferencesButtonReturn" id="btnUpdateGuiDonationCode" onclick="goToAccountPage()" type="button">
+		<button class="pure-button pure-button-10 pure-button-green guiPreferencesButtonReturn" id="btnRedirectFormerPage" onclick="redirectToPage()" type="button">
 			<font style="vertical-align: inherit;">
 				<font style="vertical-align: inherit;">返回結帳</font>
 			</font>
@@ -407,8 +407,16 @@
 		});
 	}
 
-	function goToAccountPage() {
-		window.location.href = '/account';
+	function redirectToPage() {
+	    var referralUrl = $redirectPathHdn.val();
+	    
+	    if(referralUrl === '~/Account'){
+	        window.location.href = '/account';    
+	    }
+	    else{
+	        window.location.href = '/ProductStore/Checkout';    
+	    }
+		
 	}
 
 	function showSuccessMessage(codeType) {
