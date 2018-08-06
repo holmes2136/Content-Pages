@@ -279,7 +279,7 @@
 
 
     function saveCarrierCode() {
-     	if($carrierCodeInput.val() === ''){
+     	if($carrierCodeInput.val() === '' && $CarrierCodeHdn.val() === ''){
 		 return;    
 	}
 	
@@ -293,7 +293,7 @@
     }
 
     function saveGovernmentIdCode() {
-    	if($governmentIdCodeInput.val() === ''){
+    	if($governmentIdCodeInput.val() === '' && $GovernmentIdCodeHdn.val() === ''){
 		return;    
 	}
 		
@@ -306,7 +306,7 @@
     }
 
     function saveDonationCode() {
-    	if($donationCodeSearchInput.val() === ''){
+    	if($donationCodeSearchInput.val() === '' && $DonationCodeHdn.val() === ''){
 		return;    
 	}
 		
