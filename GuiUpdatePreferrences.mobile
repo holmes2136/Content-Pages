@@ -166,7 +166,7 @@
 
 
     <div class="guiPreferencesButtonReturnWrapper">
-        <button class="pure-button pure-button-10 pure-button-green guiPreferencesButtonReturn" id="btnRedirectFormerPage" onclick="goToAccountPage()" type="button">
+        <button class="pure-button pure-button-10 pure-button-green guiPreferencesButtonReturn" id="btnRedirectFormerPage" onclick="redirectToPage()" type="button">
                 <font style="vertical-align: inherit;">返回</font>
         </button>
     </div>
@@ -410,8 +410,15 @@
         });
     }
 
-    function goToAccountPage() {
-        window.location.href = $RedirectPathHdn.val();
+    function redirectToPage() {
+        var referralUrl = $redirectPathHdn.val();
+	    
+	    if(referralUrl === '~/Account'){
+	        window.location.href = '/account';    
+	    }
+	    else{
+	        window.location.href = '/ProductStore/Checkout';    
+	    }
     }
 
     var SaveEnum = { "CarrierCode": 1, "GovernmentId": 2, "DonationCode": 0 };
