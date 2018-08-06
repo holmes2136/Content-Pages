@@ -277,6 +277,10 @@
 	});
 
 	function saveCarrierCode() {
+		if($carrierCodeInput.val() === ''){
+		    return;    
+		}
+		
 		if ($CarrierCodeHdn.val() != $carrierCodeInput.val()) {
 			SaveGovernmentUniformInvoiceCode($carrierCodeInput.val(), 1);
 		}
@@ -286,6 +290,10 @@
 	}
 
 	function saveGovernmentIdCode() {
+		if($governmentIdCodeInput.val() === ''){
+		    return;    
+		}
+		
 		if ($GovernmentIdCodeHdn.val() != $governmentIdCodeInput.val()) {
 			SaveGovernmentUniformInvoiceCode($governmentIdCodeInput.val(), 2);
 		}
@@ -295,6 +303,10 @@
 	}
 
 	function saveDonationCode() {
+		if($donationCodeSearchInput.val() === ''){
+		    return;    
+		}
+		
 		if ($DonationCodeHdn.val() != $donationCodeSearchInput.val()) {
 			SaveDonationCode($donationCodeSearchInput.val());
 		}
