@@ -449,18 +449,14 @@ FollowUpCenterApp.directive('followUpNewEnrollmentDirective', ['followUpNewEnrol
             
             $scope.BankLeadershipPoints = function(enrollee,$event){
 
-            	//var isConfirmed = confirm("[localization key="FollowUpBankLPConfirm"]");
-                var isConfirmed = confirm("test");
+            	var isConfirmed = confirm("[localization key="FollowUpBankLPConfirm"]");
+              
 
 	            if (isConfirmed) {
                    followUpNewEnrollmentSvc.BankLeadershipPoints(enrollee.CustomerID).then(function (resp) {
-                        //if(enrollee.LeadershipPointAssigned.StatusType === 3){
-                            enrollee.LeadershipPointAssigned.StatusType = 2; //Check status
-                        //}
-                        //else{
-                            //enrollee.LeadershipPointAssigned.StatusType = 3; //Uncheck status
-                        //}
-                   });
+                        
+                     enrollee.LeadershipPointAssigned.StatusType = 2; //Check status
+                      
                 }
                 else{
                     enrollee.LeadershipPointAssigned.StatusType = 3; //Uncheck status
