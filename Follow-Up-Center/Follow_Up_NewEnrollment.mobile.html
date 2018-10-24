@@ -1,0 +1,533 @@
+<style>
+    .customer-name {
+        font-size: 1.2rem;
+        line-height: 1;
+        margin-bottom: .25rem;
+        color: #40922f;
+    }
+
+    .made-contact-title {
+        font-size: 0.9em;
+    }
+
+    .container {
+        margin-bottom: .1rem;
+    }
+
+    .show-more {
+        float: right;
+    }
+
+    .expand-button {
+        color: #40922f;
+    }
+
+    .container .container--heading-top {
+        height: 50px;
+    }
+
+    #heading-right {
+        float: right;
+        width: 50%;
+        text-align: right;
+        padding-right: 20px;
+    }
+
+    #heading-left {
+        float: left;
+        width: 50%;
+    }
+
+    #heading-right i {
+        cursor: pointer;
+    }
+
+
+    .container .container--heading .container--no-bg {
+        height: 40px;
+    }
+
+    .altRow {
+        background-color: #fafafa;
+    }
+
+    .customer-phone {
+        color: green;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .customer-status {
+        color: green;
+        font-weight: bold;
+    }
+
+    .options {
+        color: green;
+        text-align: right;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .customer-info {
+        padding-bottom: 30px;
+    }
+
+    .expanded {
+        color: #3782b7e0 !important;
+    }
+
+    .popupContent {
+        border-radius: 10px;
+    }
+
+    #prefered-status-popup {
+        display: none;
+    }
+
+    .popup-title {
+        font-weight: bold;
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .popup-content {
+        border-top: 5px solid #eee;
+        padding: 10px;
+        margin-top: 15px;
+    }
+
+    .input-wrapper:not(:last-of-type) {
+        margin-bottom: .75rem;
+    }
+
+    .input-wrapper {
+        display: table;
+        height: 24px;
+    }
+
+    input[type="radio" i] {
+        margin: 3px 3px 0px 5px;
+    }
+
+    input[type="radio" i] {
+        -webkit-appearance: radio;
+        box-sizing: border-box;
+    }
+
+    input[type="radio" i], input[type="checkbox" i] {
+        background-color: initial;
+        cursor: default;
+        margin: 3px 0.5ex;
+        padding: initial;
+        border: initial;
+    }
+
+    .radio-button-container input[type=radio]:checked + label, .radio-button-container input[type=radio]:not(:checked) + label {
+        cursor: pointer;
+        padding-left: 35px;
+        position: relative;
+    }
+
+    .input-wrapper label {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .copy--color-lighter {
+        color: #777;
+    }
+
+    .copy--size-medium {
+        font-size: .875rem;
+    }
+
+    .copy {
+        color: #333;
+        font-size: .875rem;
+        margin-bottom: 1em;
+    }
+
+    .radio-button-container input[type=radio]:checked + label:before, .radio-button-container input[type=radio]:not(:checked) + label:before {
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: inset 1px 1px 2px 0 rgba(0,0,0,.3);
+        content: '';
+        height: 24px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 24px;
+    }
+
+    .radio-button-container input[type=radio]:checked + label:after {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    .radio-button-container input[type=radio]:checked + label:after, .radio-button-container input[type=radio]:not(:checked) + label:after {
+        background: linear-gradient(to bottom,#40922f 0,#285e1d 100%);
+        border-radius: 50%;
+        content: '';
+        height: 14px;
+        left: 5px;
+        position: absolute;
+        top: 5px;
+        transition: all .2s;
+        width: 14px;
+    }
+
+    .radio-button-container input[type=radio]:checked, .radio-button-container input[type=radio]:not(:checked) {
+        left: -9999px;
+        position: absolute;
+    }
+
+    /*Model  css
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-content {
+        border-radius: 10px;
+    }
+</style>
+
+<div class="wrapper">
+    <section class="mela-section background--secondary temp-margin">
+        <div class="container container--heading-top" style="height:50px;">
+            <div id="heading-left">
+                <h1 class="heading">
+                    <span class="heading__copy copy--weight-medium">新</span>
+                    <span class="heading__copy heading__copy--light">顾客</span>
+                </h1>
+            </div>
+            <div id="heading-right">
+                <a href="#" class="pure-menu-link noHoverBackground" ng-click="bootstrapPopup('sidebar-popup')">
+                    <i class="fas fa-list fa-border" style="cursor:pointer;border: solid .08em rgb(57, 165, 35);font-size:20px;"></i>
+                </a>
+            </div>
+        </div>
+
+        <!--Column options start-->
+        <div id="sidebar-popup" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" ng-click="closePopup('sidebar-popup')">&times;</span>
+                <div class="popup-title">栏位选项</div>
+                <div class="popup-content">
+                    <div class="pure-u-24-24" style="margin-bottom:20px;">
+                        <div class="pure-u-12-24" style="font-weight:bold">首先显示</div>
+                        <div class="pure-u-10-24" style="font-weight:bold;text-align:right">排序方式</div>
+                    </div>
+                    <div class="pure-u-24-24" style="margin-bottom:20px;" ng-repeat="category in categories" ng-if="category.isDisplay">
+                        <div class="pure-u-{{category.labelWidth}}-24">
+                            <div class="radio-button-container">
+                                <div class="input-wrapper input-wrapper--radio">
+                                    <input type="radio" name="{{category.nameAttribute}}" ng-click="toggleDisplay(category.id,category.sortType)" ng-checked="category.isChecked" ng-disabled="category.isDisabled" id="radio-{{category.id}}">
+                                    <label class="copy copy--size-medium copy--color-lighter" for="radio-{{category.id}}">{{category.description}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pure-u-{{category.checkBoxWidth}}-24">
+                            <div class="checkbox-container">
+                                <div class="input-wrapper input-wrapper--checkbox pull-right">
+                                    <input type="checkbox" name="chk_orderby[]" id="chk-{{category.id}}" ng-click="toggleSortBy(category.sortType,true)" ng-checked="category.isCheckboxChecked" ng-disabled="category.isCheckboxDisabled">
+                                    <label class="copy copy--size-medium copy--color-lighter" for="chk-{{category.id}}"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Column options end-->
+
+        <div class="container container--heading container--no-bg pure-u-24-24">
+            <div class="pure-u-2-24">&nbsp;</div>
+            <div id="header-enrollee" class="pure-u-8-24">
+                <div id="header-enrollee-sort" class="pure-u-2-24">
+                    <i class="fas fa-sort-up" ng-if="!firstColumnSort"></i>
+                    <i class="fas fa-sort-down" ng-if="firstColumnSort"></i>
+                </div>
+                <div class="pure-u-16-24"  ng-click="toggleSortBy(columnOptions.Enrollee.sortType,true)">
+                    {{columnOptions.Enrollee.description}}
+                </div>
+            </div>
+            <div id="header-monthEnrolled" class="pure-u-11-24">
+                <div id="header-monthEnrolled-sort" class="pure-u-2-24">
+                    <i class="fas fa-sort-up" ng-if="!secondColumnSort"></i>
+                    <i class="fas fa-sort-down" ng-if="secondColumnSort"></i>
+                </div>
+                <div ng-switch="selection.display" class="pure-u-20-24">
+                    <div ng-switch-when="1" ng-click="toggleSortBy(columnOptions.MonthEnrolled.sortType,true)">{{selection.displayName}}</div>
+                    <div ng-switch-when="2" ng-click="toggleSortBy(columnOptions.MadeContact.sortType,true)">{{selection.displayName}}</div>
+                    <div ng-switch-when="3" ng-click="toggleSortBy(columnOptions.PreferredStatus.sortType,true)">{{selection.displayName}}</div>
+                    <div ng-switch-when="4" ng-click="toggleSortBy(columnOptions.ImeaLevel.sortType,true)">{{selection.displayName}}</div>
+                    <div ng-switch-when="5" ng-click="toggleSortBy(columnOptions.MonthlyOrder.sortType,true)">{{selection.displayName}}</div>
+                    <div ng-switch-when="6" ng-click="toggleSortBy(columnOptions.LearnToEarnAvailable.sortType,true)">{{selection.displayName}}</div>
+                    <div ng-switch-when="7" ng-click="toggleSortBy(columnOptions.LeadershipPointBanked.sortType,true)">{{selection.displayName}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-repeat="item in enrollments">
+
+            <div class="container container--heading pure-u-24-24" style="width: 100%;height:100%;" ng-class="$index % 2 == 0 ? '':'altRow'">
+                <div class="pure-u-2-24" style="cursor:pointer;" ng-click="showDetails = ! showDetails">
+                    <i ng-class="(!showDetails) ? 'fas fa-chevron-circle-right' : 'fas fa-chevron-circle-down expanded'"
+                       style="color: green;font-size: 30px;"></i>
+                </div>
+                <div class="pure-u-9-24" style="padding-top:10px;">
+                    <div class="customer-name">{{item.Name}}</div>
+                </div>
+                <div ng-switch="selection.display" class="pure-u-{{selection.displayInstance.mainColumnWidth}}-24" style="padding-bottom:0px;">
+                    <div ng-switch-when="1" style="padding-top:10px;">
+                        <div class="enrolledMonth">{{item.FormattedEnrollmentDate}}</div>
+                    </div>
+                    <div ng-switch-when="2" style="padding-top:10px;">
+                        <form class="checkbox-container">
+                            <div class="input-wrapper input-wrapper--checkbox pull-right">
+                                <input type="checkbox" id="main-followup-history-checkbox-{{$index}}" ng-click="processFollowUp(0, item)" ng-checked="getCssClassNameForFollowUpStatus(item.CurrentFollowUpStatus, 0)">
+                                <label class="copy copy--size-medium copy--color-lighter" for="main-followup-history-checkbox-{{$index}}"></label>
+                            </div>
+                        </form>
+                    </div>
+                    <div ng-switch-when="3">
+                        <div class="enrolledMonth">{{getLocalizedPreferredStatusText(item.PreferredStatus)}}</div>
+                    </div>
+                    <div ng-switch-when="4" style="padding-top:10px;padding-left:10px;">
+                        <div class="">
+                            <div ng-if="item.ImeaStatus.StatusDate === null">---</div>
+                            <div ng-if="item.ImeaStatus.StatusDate !== null" style="color:green;font-weight:bold">{{item.ImeaStatus.ParticipationLevelID}}</div>
+                        </div>
+                    </div>
+                    <div ng-switch-when="5" style="padding-top:10px;padding-left:8px;">
+                        <div class="enrolledMonth">
+                            <i class="fas fa-check" style="font-size:25px;color:green;" ng-if="item.CurrentOrderStatus.StatusDate !== null"></i>
+                            <div ng-if="item.CurrentOrderStatus.StatusDate === null">---</div>
+                        </div>
+                    </div>
+                    <div ng-switch-when="6" style="padding-top:10px;padding-left:10px;">
+                        <div class="enrolledMonth" style="color:green;font-weight:bold;">{{item.LearnToEarn.CurrentMonthMaxAwardAmount}}</div>
+                    </div>
+                    <div ng-switch-when="7" style="padding-top:10px;">
+                        <div ng-if="item.LeadershipPointAssigned.StatusType == 0"></div>
+                        <form class="checkbox-container" ng-if="item.LeadershipPointAssigned.StatusType > 0">
+                            <div class="input-wrapper input-wrapper--checkbox pull-right">
+                                <input type="checkbox"  id="main-leadership-point-banked-checkbox-{{$index}}" ng-checked="item.LeadershipPointAssigned.StatusType == 2" ng-click="BankLeadershipPoints(item)">
+                                <label class="copy copy--size-medium copy--color-lighter" for="main-leadership-point-banked-checkbox-{{$index}}"></label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="container customer-info-detail" ng-class="$index % 2 == 0 ? '':'altRow'" ng-show="showDetails" style="border-top: 1px solid #eee;width: 100%;padding-left:55px;">
+                    <div class="customer-info pure-u-24-24">
+                        <div class="customer-phone">{{item.FormattedPhone}}</div>
+                    </div>
+
+                    <!--Follow up history start-->
+                    <div class="customer-info pure-u-24-24" ng-if="featureControll.isShowMadeContact">
+                        <div class="pure-u-8-24">
+                            <span class="made-contact-title">与顾客连络</span>
+                        </div>
+                        <div class="pure-u-7-24">
+                            <form class="checkbox-container">
+                                <div class="input-wrapper input-wrapper--checkbox pull-right">
+                                    <input type="checkbox" id="made-contact-checkbox-{{$index}}" ng-click="processFollowUp(0, item)" ng-checked="getCssClassNameForFollowUpStatus(item.CurrentFollowUpStatus, 0)">
+                                    <label class="copy copy--size-medium copy--color-lighter" for="made-contact-checkbox-{{$index}}"></label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="pure-u-7-24 options">
+                            <i class="fas fa-ellipsis-v" ng-click="bootstrapPopup('followup-history-popup-' + $index)"></i>
+                        </div>
+                    </div>
+                    <div id="followup-history-popup-{{$index}}" class="modal" style="display:none;">
+                        <div class="modal-content">
+                            <span class="close" ng-click="closePopup('followup-history-popup-' + $index)">&times;</span>
+                            <div class="popup-title">与顾客连络</div>
+                            <div style="padding:10px;">{{item.Name}}</div>
+                            <div class="popup-content">
+                                <div ng-repeat="followup in item.FollowUpHistory" class="pure-u-24-24" ng-init="parentIndex = $parent.$index">
+                                    <div>
+                                        <div class="pure-u-3-24">{{followup.Month}}月</div>
+                                        <div class="pure-u-16-24">....................</div>
+                                        <div class="pure-u-2-24" ng-if="followup.StatusType == 2 &&  $index !== 0"><i class="fas fa-check-circle" style="color:green;font-size:30px;"></i></div>
+                                        <div class="pure-u-2-24" ng-if="followup.StatusType == 0  && $index !== 0"><i class="fa fa-circle-o" style="font-size:30px;color: #ccc7c7;"></i></div>
+                                        <div class="pure-u-2-24" ng-if="$index === 0">
+                                            <form class="checkbox-container">
+                                                <div class="input-wrapper input-wrapper--checkbox">
+                                                    <input type="checkbox"  id="made-contact-checkbox-{{parentIndex}}" ng-click="processFollowUp(0, item)" ng-checked="getCssClassNameForFollowUpStatus(item.CurrentFollowUpStatus, 0)">
+                                                    <label class="copy copy--size-medium copy--color-lighter" for="made-contact-checkbox-{{parentIndex}}"></label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--Follow up history end-->
+                    <!--Preferred status start-->
+                    <div class="customer-info pure-u-24-24" ng-if="featureControll.isShowPreferredStatus">
+                        <div class="pure-u-12-24">顾客身份</div>
+                        <div class="customer-status pure-u-7-24">
+                            <div>{{getLocalizedPreferredStatusText(item.PreferredStatus)}}</div>
+                            <div style="color:red;font-size:13px;" ng-if="item.CmaStatus.StatusType === 0 && item.PreferredStatus.StatusType === 4"><i class="fas fa-minus-circle"></i>文书工作</div>
+                            <div style="color:red;font-size:13px;" ng-if="item.FirstOrderStatus.StatusType !== 2 && item.PreferredStatus.StatusType === 4"><i class="fas fa-minus-circle"></i>第一个订单</div>
+                        </div>
+                        <div class="pure-u-3-24 options">
+                            <i class="fas fa-ellipsis-v" ng-click="generalMessagePopup('prefered-status-popup-' + $index);" ng-if="item.PreferredStatus.StatusType === 2 "></i>
+                            <i class="fas fa-ellipsis-v" ng-click="generalMessagePopup('canceled-status-popup-' + $index);" ng-if="item.PreferredStatus.StatusType === 6 "></i>
+                        </div>
+                        <div id="prefered-status-popup-{{$index}}" ng-if="item.PreferredStatus.StatusType === 2" style="display:none">
+                            <div class="popup-title">{{item.Name}}</div>
+                            <div class="popup-content">
+                                <span style="font-weight:bold;">{{getLocalizedCMAStatusText(item.CmaStatus)}}</span>
+                            </div>
+                        </div>
+                        <div id="canceled-status-popup-{{$index}}" ng-if="item.PreferredStatus.StatusType === 6" style="display:none">
+                            <div class="popup-title">{{item.Name}}</div>
+                            <div class="popup-content">
+                                <div style="padding-bottom:10px;">取消日期:</div>
+                                <div style="font-weight:bold;">{{formateDate(item.PreferredStatus.StatusDate)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Preferred status end-->
+                    <!-- Imea status start-->
+                    <div class="customer-info pure-u-24-24" ng-if="featureControll.isShowImeaStatus">
+                        <div class="customer-imea-level-label pure-u-12-24">IMEA + Level</div>
+                        <div class="customer-imea-level-value pure-u-7-24" ng-if="item.ImeaStatus.StatusDate === null">---</div>
+                        <div class="customer-imea-level-value pure-u-7-24" ng-if="item.ImeaStatus.ParticipationLevelID > 0" style="color:green;font-weight:bold;">{{item.ImeaStatus.ParticipationLevelID}}</div>
+                        <div class="customer-imea-level-value pure-u-3-24 options" ng-if="item.ImeaStatus.ParticipationLevelID > 0">
+                            <i class="fas fa-ellipsis-v" ng-click="generalMessagePopup('imea-status-popup-' + $index);"></i>
+                        </div>
+                    </div>
+                    <div id="imea-status-popup-{{$index}}" style="display:none;">
+                        <div class="popup-title">{{item.Name}}</div>
+                        <div class="popup-content">
+                            <div>{{getLocalizedIMEAStatusText(item.ImeaStatus)}}</div>
+                        </div>
+                    </div>
+
+                    <!-- Imea status end-->
+                    <!--Monthly Order Status Start-->
+                    <div class="customer-info pure-u-24-24" ng-if="featureControll.isShowMonthlyOrder">
+                        <div class="customer-monthly-order-label pure-u-12-24">已下单</div>
+                        <div class="customer-monthly-order-value pure-u-7-24">
+                            <i class="fas fa-check" style="font-size:25px;" ng-if="item.CurrentOrderStatus.StatusDate !== null"></i>
+                            <div ng-if="item.CurrentOrderStatus.StatusDate === null">---</div>
+                        </div>
+                        <div class="customer-monthly-order pure-u-3-24 options">
+                            <i class="fas fa-ellipsis-v" ng-click="generalMessagePopup('monthly-order-status-popup-' + $index);"></i>
+                        </div>
+                    </div>
+                    <div id="monthly-order-status-popup-{{$index}}" style="display:none;">
+                        <div class="popup-title" width:40%;>
+                            <div>已下单</div>
+                            <div style="padding-top:10px;">{{item.Name}}</div>
+                        </div>
+                        <div class="popup-content">
+                            <div ng-repeat="orderHistory in item.OrderStatusHistory" class="pure-u-24-24">
+                                <div class="pure-u-4-24">{{orderHistory.Month}} 月</div>
+                                <div class="pure-u-15-24">........................</div>
+                                <div class="pure-u-3-24" ng-show="orderHistory.StatusType == 2"><i class="fas fa-check-circle" style="color:green;font-size:30px;"></i></div>
+                                <div class="pure-u-3-24" ng-show="orderHistory.StatusType == 0"><i class="fa fa-circle-o" style="font-size:30px;color: #ccc7c7;"></i></div>
+                                <div class="pure-u-3-24" ng-show="orderHistory.StatusType == 1" style="color:red;padding-bottom:20px;">自动送货订单</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Monthly Order Status End-->
+                    <!--Learn to earn start-->
+                    <div class="customer-info pure-u-24-24" ng-if="featureControll.isShowLearnToEarnAvailable">
+                        <div class="customer-learn-to-earn-label pure-u-12-24">Learn To Earn Available</div>
+                        <div class="customer-learn-to-earn-value pure-u-7-24" ng-if="item.LearnToEarnStatus.CurrentMonthMaxAwardAmount >= 0">${{item.LearnToEarnStatus.CurrentMonthMaxAwardAmount}}</div>
+                        <div class="customer-learn-to-earn-value pure-u-7-24" ng-if="item.LearnToEarnStatus == null">---</div>
+                        <div class="customer-learn-to-earn pure-u-3-24 options" ng-if="item.LearnToEarnStatus != null">
+                            <i class="fas fa-ellipsis-v" ng-click="generalMessagePopup('customer-learn-to-earn-popup-' + $index);"></i>
+                        </div>
+                    </div>
+                    <div id="customer-learn-to-earn-popup-{{$index}}" style="display:none;">
+                        <div class="popup-title" width:40%;>
+                            <div>Learn To Earn</div>
+                            <div style="padding-top:10px;">{{item.Name}}</div>
+                        </div>
+                        <div class="popup-content">
+                            <div class="pure-u-24-24" style="padding-bottom:20px;">
+                                <div class="pure-u-12-24">Video Watched</div>
+                                <div class="pure-u-7-24">...........</div>
+                                <div class="pure-u-3-24">{{item.LearnToEarnStatus.WatchedVideoCount}}</div>
+                            </div>
+                            <div class="pure-u-24-24" style="padding-bottom:20px;">
+                                <div class="pure-u-16-24">Loyalty Shopping Dollars available to unlock</div>
+                                <div class="pure-u-3-24">.....</div>
+                                <div class="pure-u-3-24">{{item.LearnToEarnStatus.AvailableLsdToActivate}}</div>
+                            </div>
+                            <div class="pure-u-24-24" style="padding-bottom:20px;">
+                                <div class="pure-u-16-24">Loyalty Shopping Dollars available to spent</div>
+                                <div class="pure-u-3-24">.....</div>
+                                <div class="pure-u-3-24">{{item.LearnToEarnStatus.AvailableToSpend}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Learn to earn stop-->
+                    <!--Leadershiop point bank start-->
+                    <div class="customer-info pure-u-24-24" ng-if="featureControll.isShowLeaderShipPointBanked">
+                        <div class="customer-leadership-point-label pure-u-8-24">Leadership Point Banked</div>
+                        <div class="customer-leadership-point-value pure-u-7-24" ng-if="item.LeadershipPointAssigned.StatusType === 0">&nbsp;</div>
+                        <div class="customer-leadership-point-value pure-u-7-24" ng-if="item.LeadershipPointAssigned.StatusType !== 0">
+                            <form class="checkbox-container">
+                                <div class="input-wrapper input-wrapper--checkbox pull-right">
+                                    <input type="checkbox" id="leadership-point-banked-checkbox-{{$index}}" ng-checked="item.LeadershipPointAssigned.StatusType == 2" ng-click="BankLeadershipPoints(item)">
+                                    <label class="copy copy--size-medium copy--color-lighter" for="leadership-point-banked-checkbox-{{$index}}"></label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--Leadershiop point bank end-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

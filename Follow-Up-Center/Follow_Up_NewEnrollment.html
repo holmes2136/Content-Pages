@@ -1,0 +1,451 @@
+<style>
+    #FollowUpNewCustomer {
+    margin: 0;
+    }
+
+    .followUpTable th, .followUpTable .altRow {
+    background-color: #eee;
+    }    
+    
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 150px;
+            border: 1px solid #888;
+            background-color: #eee;
+            color: #333;
+            border-radius: 4px;
+            padding: 20px;
+            position: absolute;
+            z-index: 1;
+            top: 120%;
+            /*.............調整Tooltip框的垂直位置 left: -50%;*/
+            margin-left: -166px;
+            /*...調整Tooltip框的水平位置*/
+        }
+
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                bottom: 100%;
+                left: 85%;
+                border-width: 5px;
+                border-style: solid;
+                border-color: transparent transparent #666 transparent;
+            }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+
+        .tooltip:hover .tooltiptext:hover {
+            visibility: visible;
+        }
+</style>
+
+<!---------------------------------------------------------------------------------->
+
+<style>
+    .fa-ellipsis-v {
+        font-size: 16px;
+        color: green;
+    }
+
+    .float_center {
+        float: right;
+        position: relative;
+        left: -50%; /* or right 50% */
+        text-align: left;
+    }
+
+    /*Checkbox style start */
+    input[type="radio" i], input[type="checkbox" i] {
+        background-color: initial;
+        cursor: default;
+        margin: 3px 0.5ex;
+        padding: initial;
+        border: initial;
+    }
+
+    .checkbox-container input[type=checkbox]:checked, .checkbox-container input[type=checkbox]:not(:checked) {
+        left: -9999px;
+        position: absolute;
+    }
+
+    input[type=checkbox], input[type=radio] {
+        box-sizing: border-box;
+        padding: 0;
+        *height: 13px;
+        *width: 13px;
+    }
+
+    .checkbox-container input[type=checkbox]:checked + label, .checkbox-container input[type=checkbox]:not(:checked) + label {
+        cursor: pointer;
+        padding-left: 50px;
+        position: relative;
+        padding-bottom:20px;
+    }
+
+    .input-wrapper label {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .checkbox-container input[type=checkbox]:not(:checked) + label:before {
+        background: #fff;
+        border-radius: 3px;
+        border: 1px solid #eee;
+        box-shadow: inset 1px 1px 2px 0 rgba(0,0,0,.3);
+        content: '';
+        height: 22px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 22px;
+    }
+
+    .made-contact-checkbox-container input[type=checkbox]:not(:checked) + label:before {
+        height: 20px;
+    }
+
+    .checkbox-container input[type=checkbox]:not(:checked) + label:after {
+        opacity: 0;
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+
+    .checkbox-container input[type=checkbox]:checked + label:after, .checkbox-container input[type=checkbox]:not(:checked) + label:after {
+        color: #fff;
+        content: '\f00c';
+        font-size: 16px;
+        left: 5px;
+        line-height: 24px;
+        position: absolute;
+        top: 5px;
+        transition: all .2s;
+    }
+
+    .category-nav__list-item--disc .category-nav__list-action:after, .checkbox-container input[type=checkbox]:checked + label:after, .checkbox-container input[type=checkbox]:not(:checked) + label:after, .close-action:before, .dropDownContainer:after, .edit-wrapper--search .input--search:before, .header__action--cart:before, .header__action--search:before, .link--arrow:after, .link--external:after {
+        font: normal normal normal 14px/1 FontAwesome;
+    }
+
+    .checkbox-container input[type=checkbox]:checked + label:before {
+        background: linear-gradient(to bottom,#40922f 0,#285e1d 100%);
+        border-radius: 3px;
+        content: '';
+        height: 24px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 24px;
+    }
+
+    .checkbox-container input[type=checkbox]:checked + label:after {
+        opacity: 1;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+ 
+    /*Checkbox style end */
+
+    .fa fa-sort-desc, .fa fa-sort-asc {
+        font-size: 15px;
+        color: slategray;
+    }
+
+    .column-left {
+        float: left;
+        padding-top: 2px;
+    }
+
+    .column-right {
+        width: 60%;
+        float: left;
+        cursor:pointer;
+    }
+</style>
+<div id="FollowUpNewCustomer">
+    <table class="followUpTable" style="border-top: none" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th style="width:22%;">
+                    <div>
+                        <div style="float:left;width:5%;padding-top:5px;">
+                            <a>
+                                <i ng-if="enroleeSort" class="fa fa-sort-desc" ng-click="changeOrderBy('enrollee')"></i>
+                                <i ng-if="!enroleeSort" class="fa fa-sort-asc" ng-click="changeOrderBy('enrollee')"></i>
+                            </a>
+                        </div>
+                        <div  style="width:60%;float:left;font-size:20px;cursor:pointer" ng-click="changeOrderBy('enrollee')">{{columnOptions.Enrollee.description}}</div>
+                    </div>
+                </th>
+                <th ng-if="featureControll.isShowMonthEnrolled" style="width:12%;">
+                    <div>
+                        <div class="column-left" style="width:6%">
+                            <a>
+                                <i ng-if="monthEnrolledSort" class="fa fa-sort-desc" ng-click="changeOrderBy('monthEnrolled')"></i>
+                                <i ng-if="!monthEnrolledSort" class="fa fa-sort-asc" ng-click="changeOrderBy('monthEnrolled')"></i>
+                            </a>
+                        </div>
+                        <div class="column-right" ng-click="changeOrderBy('monthEnrolled')">{{columnOptions.MonthEnrolled.description}}</div>
+                    </div>
+                </th>
+                <th style="width:12%;" ng-if="featureControll.isShowPreferredStatus">
+                    <div>
+                        <div class="column-left" style="width:6%;">
+                            <a>
+                                <i ng-if="preferredStatusSort" class="fa fa-sort-desc" ng-click="changeOrderBy('preferredStatus')"></i>
+                                <i ng-if="!preferredStatusSort" class="fa fa-sort-asc" ng-click="changeOrderBy('preferredStatus')"></i>
+                            </a>
+                        </div>
+                        <div class="column-right" ng-click="changeOrderBy('preferredStatus')">{{columnOptions.PreferredStatus.description}}</div>
+                    </div>
+                </th>
+                <th style="width:9%;" ng-if="featureControll.isShowImeaStatus">
+                    <div>
+                        <div class="column-left">
+                            <a>
+                                <i ng-if="imeaLevelSort" class="fa fa-sort-desc" ng-click="changeOrderBy('imeaLevel')"></i>
+                                <i ng-if="!imeaLevelSort" class="fa fa-sort-asc" ng-click="changeOrderBy('imeaLevel')"></i>
+                            </a>
+                        </div>
+                        <div class="column-right" ng-click="changeOrderBy('imeaLevel')">{{columnOptions.ImeaLevel.description}}</div>
+                    </div>
+                </th>
+                <th style="width:2%;" ng-if="featureControll.isShowMonthlyOrder">
+                    <div>
+                        <div class="column-left" style="width:12%;">
+                            <a>
+                                <i ng-if="monthlyOrderSort" class="fa fa-sort-desc" ng-click="changeOrderBy('monthlyOrder')"></i>
+                                <i ng-if="!monthlyOrderSort" class="fa fa-sort-asc" ng-click="changeOrderBy('monthlyOrder')"></i>
+                            </a>
+                        </div>
+                        <div class="column-right" ng-click="changeOrderBy('monthlyOrder')">{{columnOptions.MonthlyOrder.description}}</div>
+                    </div>
+                </th>
+                <th style="width:12%;" ng-if="featureControll.isShowLearnToEarnAvailable">
+                    <div>
+                        <div class="column-left">
+                            <a>
+                                <i ng-if="learnToEarnSort" class="fa fa-sort-desc" ng-click="changeOrderBy('learnToEarn')"></i>
+                                <i ng-if="!learnToEarnSort" class="fa fa-sort-asc" ng-click="changeOrderBy('learnToEarn')"></i>
+                            </a>
+                        </div>
+                        <div class="column-right" ng-click="changeOrderBy('learnToEarn')">{{columnOptions.LearnToEarnAvailable.description}}</div>
+                    </div>
+                </th>
+                <th style="width:10%;" ng-if="featureControll.isShowLeaderShipPointBanked">
+                    <div>
+                        <div class="column-left">
+                            <a>
+                                <i ng-if="leadershipPointSort" class="fa fa-sort-desc" ng-click="changeOrderBy('leadershipPoint')"></i>
+                                <i ng-if="!leadershipPointSort" class="fa fa-sort-asc" ng-click="changeOrderBy('leadershipPoint')"></i>
+                            </a>
+                        </div>
+                        <div class="column-right" ng-click="changeOrderBy('leadershipPoint')">{{columnOptions.LeadershipPointBanked.description}}</div>
+                    </div>
+                </th>
+                <th style="width:2%;" ng-if="featureControll.isShowMadeContact">
+                    <div>
+                        <div class="column-left" style="width:12%;">
+                            <i ng-if="madeContactSort" class="fa fa-sort-desc" ng-click="changeOrderBy('madeContact')"></i>
+                            <i ng-if="!madeContactSort" class="fa fa-sort-asc" ng-click="changeOrderBy('madeContact')"></i>
+                        </div>
+                        <div class="column-right" ng-click="changeOrderBy('madeContact')">{{columnOptions.MadeContact.description}}</div>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in enrollments" ng-class='$index % 2 == 0 ? "": "altRow"'>
+                <td class="cellBorders">
+                    <div style="font-weight:bold;">{{item.Name}}</div>
+                    <div id="divenrolleePhone" class="enrolleePhoneColumn">{{item.FormattedPhone}}</div>
+                </td>
+                <td class="cellBorders" style="padding-left: 20px;" ng-if="featureControll.isShowMonthEnrolled">
+                    {{item.FormattedEnrollmentDate}}
+                </td>
+                <!--Preferred status start-->
+                <td class="cellBorders" style="color:green;font-weight:bold" ng-if="featureControll.isShowPreferredStatus">
+
+                    <div ng-if="item.PreferredStatus.StatusType !== 4" style="float:left; width:80%;">
+                        <div ng-if="item.PreferredStatus.StatusType === 2" style="color:green">{{getLocalizedPreferredStatusText(item.PreferredStatus)}}</div>
+                        <div ng-if="item.PreferredStatus.StatusType === 6" style="color:#888">{{getLocalizedPreferredStatusText(item.PreferredStatus)}}</div>
+                        <div ng-if="item.PreferredStatus.StatusType !== 2 && item.PreferredStatus.StatusType !== 6" style="color:black">{{getLocalizedPreferredStatusText(item.PreferredStatus)}}</div>
+                    </div>
+                    <div ng-if="item.PreferredStatus.StatusType === 4" style="float:left;">
+                        <div style="color:black">{{getLocalizedPreferredStatusText(item.PreferredStatus)}}</div>
+                    </div>
+                    <div class="tooltip" ng-if="item.PreferredStatus.StatusType !== 4" style="float:right; width:10px;">
+                        <i class="fa fa-ellipsis-v"></i>
+
+                        <div class="tooltiptext">
+                            <div ng-if="item.PreferredStatus.StatusType === 2 ">
+                                申请表已收到：
+                                <div style="font-weight:bold;"> {{getLocalizedCMAStatusText(item.CmaStatus)}}</div>
+                            </div>
+                            <div ng-if="item.PreferredStatus.StatusType === 6 ">
+                                取消日期:
+                                <div style="font-weight:bold;">{{formateDate(item.PreferredStatus.StatusDate)}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tooltip" ng-if="item.PreferredStatus.StatusType === 4" style="float:left;padding-left:5px;">
+                        <span style="color:darkred;font-size:13px;" ng-if="item.ImeaStatus.StatusType === 0 && item.CmaStatus.StatusType === 0"><i class="fa fa-file-excel-o"></i></span>
+                        <span style="color:darkred;font-size:13px;" ng-if="item.FirstOrderStatus.StatusType !== 2"><i class="fa fa-shopping-cart"></i></span>
+                        <div class="tooltiptext" style="font-size:13px;">
+                            <div ng-if="item.ImeaStatus.StatusType === 0 && item.CmaStatus.StatusType === 0" style="padding-bottom:5px;">
+                                <i class="fa fa-file-excel-o" style="color:darkred;"></i> 文书工作
+                            </div>
+                            <div ng-if="item.FirstOrderStatus.StatusType !== 2">
+                                <i class="fa fa-shopping-cart" style="color:darkred;"></i>第一个订单
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+                <!--Preferred status end-->
+                <!-- Imea status start-->
+                <td class="cellBorders"  ng-if="featureControll.isShowImeaStatus">
+
+                    <div style="float:left;width:40px;" ng-if="item.ImeaStatus.StatusDate === null"></div>
+                    <div style="float:left;width:40px; text-align:center;" ng-if="item.ImeaStatus.StatusDate !== null && item.ImeaStatus.ParticipationLevelID > 0">{{item.ImeaStatus.ParticipationLevelID}}</div>
+
+                    <div class="tooltip" ng-if='getLocalizedIMEAStatusText(item.ImeaStatus) != ""'>
+                        <div style="width:10px; float:right;">
+                            <div class="fa fa-ellipsis-v"></div>
+                        </div>
+
+                        <div class="tooltiptext">
+                            <div>{{getLocalizedIMEAStatusText(item.ImeaStatus)}}</div>
+                            <div style="font-weight:bold !important;">{{item.ImeaStatus.StatusDate}}</div>
+                        </div>
+                    </div>
+
+                </td>
+                <!-- Imea status end-->
+                <!--[ Monthly Order Status Start ]-->
+                <td class="cellBorders"  ng-if="featureControll.isShowMonthlyOrder">
+                    <div style="width:60px;float:left;">
+                        <i class="fa fa-check float_center" style="font-size: 20px;" ng-if="item.CurrentOrderStatus.StatusType >  0"></i>
+                    </div>
+                    <div class="tooltip" style="width:10px; float:right;">
+                        <!-- ng-if='item.OrderStatusHistory !== null'-->
+                        <div>
+                            <i class="fa fa-ellipsis-v"></i>
+                        </div>
+
+                        <div class="tooltiptext">
+                            <div style="color:green; font-size:16px; font-weight: bold !important;">已下单</div>
+                            <div style="margin-bottom:10px; font-size:12px;margin-top:5px;">{{item.Name}}</div>
+                            <div style="margin-bottom:5px;" ng-repeat="orderHistory in item.OrderStatusHistory" class="pure-u-24-24">
+                                <div class="pure-u-5-24">{{orderHistory.Month}} 月</div>
+                                <div class="pure-u-13-24" ng-if="orderHistory.StatusType == 2 || orderHistory.StatusType == 0">..............</div>
+                                <div class="pure-u-4-24" ng-if="orderHistory.StatusType == 2 || orderHistory.StatusType == 0">
+                                    <i ng-if="orderHistory.StatusType == 2" class="fa fa-check-circle" style="color:green;font-size: 16px;"></i>
+                                    <i ng-if="orderHistory.StatusType == 0" class="fa fa-circle-o" style="color:green;font-size: 16px;"></i>
+                                </div>
+
+                                <div class="pure-u-5-24" ng-if="orderHistory.StatusType == 1">......</div>
+                                <div class="pure-u-12-24"  ng-if="orderHistory.StatusType == 1">
+                                    <div style="color:darkred;font-weight:bold !important;">自动送货订单</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+                <!--Monthly Order Status End-->
+                <!--Learn to earn start-->
+                <td class="cellBorders" ng-if="featureControll.isShowLearnToEarnAvailable">
+
+                    <div style="float:left; width:70px; margin-left:10px;"><span ng-if="item.LearnToEarnStatus.CurrentMonthMaxAwardAmount >= 0">$</span>{{item.LearnToEarnStatus.CurrentMonthMaxAwardAmount}}</div>
+
+                    <div class="tooltip" style="width:10px; float:right;" ng-if="item.LearnToEarnStatus.CurrentMonthMaxAwardAmount >= 0">
+                        <div>
+                            <i class="fa fa-ellipsis-v"></i>
+                        </div>
+
+                        <div class="tooltiptext">
+                            <div style="color:green; font-size:16px; font-weight: bold !important;">LEARN TO EARN</div>
+                            <div style="margin-bottom:10px; font-size:10px;">{{item.Name}}</div>
+                            <div style="margin-bottom: 8px;">
+                                <span>Video Watched........</span>
+                                <span style="font-weight:bold !important;">{{item.LearnToEarnStatus.WatchedVideoCount}}</span>
+                            </div>
+                            <div style="margin-bottom: 8px;">
+                                <div>Loyalty Shopping</div>
+                                <div>Dollars available</div>
+                                <span>to activate.........</span>
+                                <span style="font-weight:bold !important;">$<span>{{item.LearnToEarnStatus.AvailableLsdToActivate}}</span></span>
+                            </div>
+                            <div>
+                                <div>Loyalty Shopping</div>
+                                <div>Dollars available</div>
+                                <span>to spend............</span>
+                                <span style="font-weight:bold !important;">$<span>{{item.LearnToEarnStatus.AvailableToSpend}}</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+                <!--Learn to earn stop-->
+                <!--Leadershiop point bank start-->
+                <td class="cellBorders" ng-if="featureControll.isShowLeaderShipPointBanked">
+                    <div class="leadershipPointBankingStatusContainer">
+                        <form class="checkbox-container" ng-if="item.LeadershipPointAssigned.StatusType !== 0">
+                                <div class="input-wrapper input-wrapper--checkbox pull-right">
+                                    <input type="checkbox" id="leadership-point-banked-checkbox-{{$index}}" ng-checked="item.LeadershipPointAssigned.StatusType == 2" ng-click="BankLeadershipPoints(item)">
+                                    <label class="copy copy--size-medium copy--color-lighter" for="leadership-point-banked-checkbox-{{$index}}"></label>
+                                </div>
+                         </form>
+                    </div>
+                </td>
+                <!--Leadershiop point bank end-->
+                <!-- made contact start -->
+                <td class="cellBorders" ng-if="featureControll.isShowMadeContact">
+
+                    <div style="float:left; width:60px; text-align:center;">
+                        <form class="checkbox-container">
+                            <div class="input-wrapper input-wrapper--checkbox pull-right">
+                                <input type="checkbox" id="made-contact-checkbox-{{$index}}" ng-click="processFollowUp(0, item)" ng-checked="getCssClassNameForFollowUpStatus(item.CurrentFollowUpStatus, 0)">
+                                <label class="copy copy--size-medium copy--color-lighter" for="made-contact-checkbox-{{$index}}"></label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="tooltip" style="width:10px; float:right;">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <div class="tooltiptext">
+                            <div style="color:green; font-size:16px; font-weight: bold !important;">与顾客连络</div>
+                            <div style="margin-bottom:10px;font-size: 12px;margin-top:12px;">{{item.Name}}</div>
+                            <div style="margin-bottom:10px;" ng-repeat="followup in item.FollowUpHistory" ng-init="parentIndex = $parent.$index" class="pure-u-24-24">
+                                <div class="pure-u-5-24">{{followup.Month}}月</div>
+                                <div class="pure-u-12-24">.............</div>
+                                <div class="pure-u-5-24">
+                                    <i ng-if="followup.StatusType == 2 && $index !==0" class="fa fa-check-circle" style="color:green;font-size:16px;padding-left:5px;"></i>
+                                    <i ng-if="followup.StatusType == 0  && $index !== 0" class="fa fa-circle-o" style="font-size:16px;color: #ccc7c7;padding-left:5px;"></i>
+                                    <span ng-if="$index === 0">
+                                        <span class="checkbox-container made-contact-checkbox-container">
+                                            <span>
+                                                <input type="checkbox" name="made-contact-checkbox-{{parentIndex}}" ng-click="processFollowUp(0, item)" id="made-contact-checkbox-{{parentIndex}}" ng-checked="getCssClassNameForFollowUpStatus(item.CurrentFollowUpStatus, 0)">
+                                                <label for="made-contact-checkbox-{{parentIndex}}" style="padding-left:0px;"></label>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <!-- made contact end -->
+            </tr>
+
+        </tbody>
+    </table>
+</div>
