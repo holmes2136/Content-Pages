@@ -134,7 +134,7 @@ FollowUpCenterApp.directive('followUpNewEnrollmentDirective', ['followUpNewEnrol
                     $scope.featureControll.isShowPreferredStatus = true;
                     $scope.featureControll.isShowImeaStatus = true;
                     $scope.featureControll.isShowMonthlyOrder = true;
-                    $scope.featureControll.isShowLeaderShipPointBanked = true;
+                    $scope.featureControll.isShowLeaderShipPointBanked = false;
                     $scope.featureControll.isShowLearnToEarnAvailable =true;
                     $scope.featureControll.isShowMadeContact = true;
                 break;
@@ -170,7 +170,7 @@ FollowUpCenterApp.directive('followUpNewEnrollmentDirective', ['followUpNewEnrol
                     $scope.featureControll.isShowPreferredStatus = true;
                     $scope.featureControll.isShowImeaStatus = true;
                     $scope.featureControll.isShowMonthlyOrder = true;
-                    $scope.featureControll.isShowLeaderShipPointBanked = true;
+                    $scope.featureControll.isShowLeaderShipPointBanked = false;
                     $scope.featureControll.isShowLearnToEarnAvailable = true;
                     $scope.featureControll.isShowMadeContact = true;
                 break;
