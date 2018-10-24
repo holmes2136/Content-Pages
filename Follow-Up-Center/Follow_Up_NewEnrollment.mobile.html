@@ -348,12 +348,13 @@
                     </div>
                     <div ng-switch-when="7" style="padding-top:10px;">
                         <div ng-if="item.LeadershipPointAssigned.StatusType == 0"></div>
-                        <form class="checkbox-container" ng-if="item.LeadershipPointAssigned.StatusType > 0">
+                        <form class="checkbox-container" ng-if="item.LeadershipPointAssigned.StatusType === 3">
                             <div class="input-wrapper input-wrapper--checkbox pull-right">
-                                <input type="checkbox"  id="main-leadership-point-banked-checkbox-{{$index}}" ng-checked="item.LeadershipPointAssigned.StatusType == 2" ng-click="BankLeadershipPoints(item)">
+                                <input type="checkbox"  id="main-leadership-point-banked-checkbox-{{$index}}" ng-checked="item.LeadershipPointAssigned.StatusType == 2" ng-click="BankLeadershipPoints(item,$event)">
                                 <label class="copy copy--size-medium copy--color-lighter" for="main-leadership-point-banked-checkbox-{{$index}}"></label>
                             </div>
                         </form>
+                        <div style="text-align:center;"><i class="fas fa-check" style="font-size:25px;text-align:center;" ng-if="item.LeadershipPointAssigned.StatusType === 2"></i></div>
                     </div>
                 </div>
             </div>
@@ -516,13 +517,16 @@
                     <div class="customer-info pure-u-24-24" ng-if="featureControll.isShowLeaderShipPointBanked">
                         <div class="customer-leadership-point-label pure-u-8-24">Leadership Point Banked</div>
                         <div class="customer-leadership-point-value pure-u-7-24" ng-if="item.LeadershipPointAssigned.StatusType === 0">&nbsp;</div>
-                        <div class="customer-leadership-point-value pure-u-7-24" ng-if="item.LeadershipPointAssigned.StatusType !== 0">
+                        <div class="customer-leadership-point-value pure-u-7-24" ng-if="item.LeadershipPointAssigned.StatusType === 3">
                             <form class="checkbox-container">
                                 <div class="input-wrapper input-wrapper--checkbox pull-right">
-                                    <input type="checkbox" id="leadership-point-banked-checkbox-{{$index}}" ng-checked="item.LeadershipPointAssigned.StatusType == 2" ng-click="BankLeadershipPoints(item)">
+                                    <input type="checkbox" id="leadership-point-banked-checkbox-{{$index}}" ng-checked="item.LeadershipPointAssigned.StatusType == 2" ng-click="BankLeadershipPoints(item,$event)">
                                     <label class="copy copy--size-medium copy--color-lighter" for="leadership-point-banked-checkbox-{{$index}}"></label>
                                 </div>
                             </form>
+                        </div>
+                        <div  class="customer-leadership-point-value pure-u-10-24" ng-if="item.LeadershipPointAssigned.StatusType === 2" style="text-align:center">
+                        <i class="fas fa-check" style="font-size:25px;"></i>
                         </div>
                     </div>
                     <!--Leadershiop point bank end-->

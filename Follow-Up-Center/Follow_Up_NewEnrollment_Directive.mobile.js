@@ -514,17 +514,23 @@ FollowUpCenterApp.directive('followUpNewEnrollmentDirective', ['followUpNewEnrol
                 return '';
             };
             
-            $scope.BankLeadershipPoints = function(enrollee){
+             $scope.BankLeadershipPoints = function(enrollee,$event){
 
-                followUpNewEnrollmentSvc.BankLeadershipPoints(enrollee.CustomerId).then(function (resp) {
-                    if(enrollee.LeadershipPointAssigned.StatusType === 3){
-                        enrollee.LeadershipPointAssigned.StatusType = 2; //Check status
-                    }
-                    else{
-                        enrollee.LeadershipPointAssigned.StatusType = 3; //Uncheck status
-                    }
-                });
-            };
+                //var isConfirmed = confirm("[localization key="FollowUpBankLPConfirm"]");
+                var isConfirmed = confirm("test");
+
+                if(isConfirmed){
+                     followUpNewEnrollmentSvc.BankLeadershipPoints(enrollee.CustomerID).then(function (resp) {
+                         enrollee.LeadershipPointAssigned.StatusType = 2; //Check status
+                    });
+                }
+                else
+                {
+                    enrollee.LeadershipPointAssigned.StatusType = 3; //Uncheck status
+                    angular.element($event.target).prop('checked',false);
+                }
+               
+            }
 
             $scope.processFollowUp = function (followUpAction, enrollee) {
 
@@ -593,7 +599,7 @@ FollowUpCenterApp.factory('followUpNewEnrollmentFactory', ['$http', '$q', functi
                 cache: false,
                 method: "POST",
                 params: {
-                    enrolleeId: enrollee.CustomerID,
+                    enrolleeId:enrolleeId,
                 }
             });
         }
