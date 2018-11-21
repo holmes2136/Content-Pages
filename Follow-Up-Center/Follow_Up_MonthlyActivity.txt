@@ -33,7 +33,7 @@
   var w = 700;
   var h = 150;
   var barPadding = 1;
-  var margin = { top: -10, right: 10, bottom: 15, left: 130 };
+  var margin = { top: 15, right: 10, bottom: 15, left: 120 };
 
   function initialChart() {
 
@@ -49,9 +49,9 @@
 
   drawLegend();
 
-  var xScale = d3.scale.linear().domain([0, months.map(function (d) {
+  var xScale = d3.scale.linear().domain([-120, months.map(function (d) {
   return d;
-  })]).range([0, w]);
+  })]).range([-120, w]);
 
 
   var xAxis = d3.svg.axis()
@@ -192,9 +192,9 @@
   .attr("height", h + margin.top + margin.bottom)
   .attr("transform", "translate(" + margin.left + "," + 220 + ")");
 
-  var xScale2 = d3.scale.linear().domain([0, months.map(function (d) {
+  var xScale2 = d3.scale.linear().domain([-120, months.map(function (d) {
   return d;
-  })]).range([0, w]);
+  })]).range([-120, w]);
 
 
 
@@ -263,13 +263,15 @@
   chart.append("text")
   .text("±ÀÂË +")
   .attr("font", "normal 10px Arial,Helvetica,sans-serif")
-  .attr("x", 0)
-  .attr("y", 140);
+  .attr("style","font-weight:bold !important;font-size:14px;")
+  .attr("x", 20)
+  .attr("y", 150);
 
   chart.append("text")
   .text("¨ú®ø/²×¤î -")
   .attr("font", "normal 10px Arial,Helvetica,sans-serif")
-  .attr("x", 0)
+  .attr("style","font-weight:bold !important;font-size:14px;")
+  .attr("x", 20)
   .attr("y", 240);
   }
 
