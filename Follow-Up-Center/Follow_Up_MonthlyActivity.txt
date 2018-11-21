@@ -1,0 +1,395 @@
+<div class="title">
+  <span class="monitor_header">{{title}}</span>
+</div>
+<div class="description">{{description}}</div>
+<div id="monthlyActivityContainer">
+  <table class="monthlyAcitivityTable monthlyAcitivityTable-bordered">
+    <tr>
+      <th></th>
+      <td id="month" ng-repeat="month in months track by $index">{{month.MonthLabel}}</td>
+    </tr>
+    <tr>
+      <th class="header">{{headerEnrollment}}</th>
+      <td ng-repeat="enrollment in enrollments track by $index">{{enrollment}}</td>
+    </tr>
+    <tr>
+      <th class="header">{{headerCancellation}}</th>
+      <td ng-repeat="cancellation in cancellations track by $index">{{cancellation}}</td>
+    </tr>
+    <tr>
+      <th class="header">{{headerNet}}</th>
+      <td class="netStyle" ng-repeat="net in nets track by $index">{{net}}</td>
+    </tr>
+  </table>
+
+  <div id="chartContainer">
+    <svg id="chart">
+    </svg>
+  </div>
+</div>
+
+<script>
+
+  var w = 700;
+  var h = 150;
+  var barPadding = 1;
+  var margin = { top: -10, right: 10, bottom: 15, left: 130 };
+
+  function initialChart() {
+
+  }
+
+  function drawEnrollmentsReport(enrollments, months) {
+  var chart1 = d3.select("#chart")
+  .attr("width", w + margin.left + margin.right)
+  .attr("height", h + margin.top + margin.bottom)
+  .append("g")
+  .attr("id", "enrollment")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  drawLegend();
+
+  var xScale = d3.scale.linear().domain([0, months.map(function (d) {
+  return d;
+  })]).range([0, w]);
+
+
+  var xAxis = d3.svg.axis()
+  .scale(xScale)
+  .orient("bottom");
+
+  var y = d3.scale.linear().range([h, 0]);
+
+  y.domain([0, d3.max(enrollments, function (d) { return d; })]);
+
+  var yAxis = d3.svg.axis()
+  .scale(y)
+  .ticks(10);
+
+  chart1.append("g")
+  .attr("class", "axis")
+  .attr("transform", "translate(0," + h + ")")
+  .call(xAxis);
+
+  chart1.selectAll("rect")
+  .data(enrollments)
+  .enter()
+  .append("rect")
+  .attr("x", function (d, i) {
+  return i * (w / enrollments.length);
+  })
+  .attr("y", function (d) {
+  return h;
+  })
+  .attr("id", function (d, i) {
+  return "rectIndex" + (i + 1);
+  })
+  .attr("width", 16)
+  .attr("height", function (d) {
+  return 0;
+  })
+  .attr("fill", "#f7922b")
+  .transition()
+  .delay(function (d, i) { return i * 200; })
+  .attr("y", function (d, i) { return y(d); })
+  .attr("height", function (d) { return h - y(d); });
+
+
+  chart1
+  .selectAll("text")
+  .data(enrollments)
+  .enter()
+  .append("text")
+  .text(function (d) {
+  return d;
+  })
+  .attr("x", function (d, i) {
+  return i * (w / enrollments.length) + 7;
+  })
+  .attr("y", function (d) {
+  return y(d) - 6;
+  })
+  .attr("font-family", "sans-serif")
+  .attr("fill", "#848080")
+  .attr("opacity", 0)
+  .transition()
+  .delay(function (d, i) { return i * 200; })
+  .attr("opacity", 1);
+
+
+  $("#chart").attr('height', "500");
+  }
+
+  function drawMonthAxis(months, monthlyActivity) {
+
+  var height = 100,
+  padding = 100,
+  middleMonths = [];
+
+  var itemsGroupByYear = _.groupBy(monthlyActivity, 'YearLabel');
+
+  _.each(itemsGroupByYear, function (items) {
+  var middleItem = items[Math.round((items.length - 1) / 2)];
+  middleMonths.push(middleItem);
+  });
+
+  var vis = d3.select("#chart")
+  .append("g")
+  .attr("width", w + margin.left + margin.right)
+  .attr("height", 20)
+  .attr("id", "months")
+  .attr("transform", "translate(" + margin.left + "," + 70 + ")");
+
+
+  var xScale = d3.scale.ordinal().rangeRoundBands([0, w], 0.1);
+
+  xScale.domain(months.map(function (d) {
+  return d.MonthLabel;
+  }));
+
+  var xAxis = d3.svg.axis()
+  .orient("bottom")
+  .scale(xScale);
+
+  vis.append("g")
+  .attr("class", "xaxis")
+  .attr("transform", "translate(10," + (height) + ")")
+  .call(xAxis);
+
+
+  vis.selectAll(".tick")
+  .data(monthlyActivity)
+  .attr("transform", function (d, i) {
+  var xPosition = i * (w / months.length);
+  return "translate(" + xPosition + ",0)";
+  })
+  .attr("id", function (d, i) {
+  return "monthIndex" + d.MonthIndex;
+  });
+
+  vis.selectAll(".xaxis text")
+  .attr("font-family", "sans-serif")
+  .attr("font-size", "13px")
+  .attr("fill", "#848080")
+
+  _.each(middleMonths, function (ele) {
+  var monthIndex = ele.MonthIndex;
+  var $ele = $("#monthIndex" + monthIndex);
+  var $copyEle = $ele.find("text:eq(0)").clone();
+  $copyEle.attr('y', 30);
+  $copyEle.text(ele.YearLabel);
+  $ele.append($copyEle);
+  });
+
+
+  }
+
+  function drawCancellationsReport(cancellations, months) {
+  var chart2 = d3.select("#chart")
+  .append("g")
+  .attr("id", "cancellationChart")
+  .attr("width", w + margin.left + margin.right)
+  .attr("height", h + margin.top + margin.bottom)
+  .attr("transform", "translate(" + margin.left + "," + 220 + ")");
+
+  var xScale2 = d3.scale.linear().domain([0, months.map(function (d) {
+  return d;
+  })]).range([0, w]);
+
+
+
+  var xAxis2 = d3.svg.axis()
+  .scale(xScale2)
+  .orient("bottom");
+
+  var y = d3.scale.linear().range([h, 0]);
+
+  y.domain([0, d3.max(cancellations, function (d) { return d; })]);
+
+  var yAxis = d3.svg.axis()
+  .scale(y)
+  .ticks(10);
+
+  chart2.selectAll("rect")
+  .data(cancellations)
+  .enter()
+  .append("rect")
+  .attr("x", function (d, i) {
+  return i * (w / cancellations.length);
+  })
+  .attr("y", 0)
+  .attr("width", 14)
+  .attr("height", function (d) {
+  return 0;
+  })
+  .attr("fill", "#26bbb4")
+  .transition()
+  .delay(function (d, i) { return i * 200; })
+  .attr("y", function (d, i) { return 0; })
+  .attr("height", function (d) { return h - y(d); });
+
+
+  chart2.selectAll("text")
+  .data(cancellations)
+  .enter()
+  .append("text")
+  .text(function (d) {
+  return d;
+  })
+  .attr("x", function (d, i) {
+  return i * (w / cancellations.length) + 7;
+  })
+  .attr("y", function (d) {
+  return h - y(d) + 14;
+  })
+  .attr("font-family", "sans-serif")
+  .attr("font-size", "11px")
+  .attr("fill", "#848080")
+  .attr("opacity", 0)
+  .transition()
+  .delay(function (d, i) { return i * 200; })
+  .attr("opacity", 1);
+
+  chart2.append("g")
+  .attr("class", "axis")
+  .attr("transform", "translate(0," + 0 + ")")
+  .call(xAxis2);
+  }
+
+  function drawLegend() {
+
+  var chart = d3.select("#chart");
+
+  chart.append("text")
+  .text("±ÀÂË +")
+  .attr("font", "normal 10px Arial,Helvetica,sans-serif")
+  .attr("x", 0)
+  .attr("y", 140);
+
+  chart.append("text")
+  .text("¨ú®ø/²×¤î -")
+  .attr("font", "normal 10px Arial,Helvetica,sans-serif")
+  .attr("x", 0)
+  .attr("y", 240);
+  }
+
+  function drawVerticalSeparatorLine(monthlyActivity) {
+
+  var chart = d3.select("#chart");
+
+  var middleX = 0;
+
+  var itemsGroupByYear = _.groupBy(monthlyActivity, 'YearLabel');
+
+  var years = _.keys(itemsGroupByYear);
+
+  if (years.length <= 1) {return;}
+
+  var lastMonth = _.last(itemsGroupByYear[_.keys(itemsGroupByYear)[0]]);
+
+
+  var monthIndex = lastMonth.MonthIndex;
+  var nextMonthIndex = monthIndex + 1;
+  var x1 = d3.transform(d3.select("#monthIndex" + monthIndex).attr("transform")).translate[0];
+  var x2 = d3.transform(d3.select("#monthIndex" + nextMonthIndex).attr("transform")).translate[0];
+
+  middleX = (x2 - x1) / 2 + 7;
+
+  d3.select("#enrollment").append("line")
+  .attr("class", "line")
+  .attr("x1", x1 + middleX)
+  .attr("x2", x1 + middleX)
+  .attr("y1", 150)
+  .attr("y2", 205)
+  .attr("stroke", "#bfb9b9");
+  }
+
+
+</script>
+
+<style>
+  #monthlyActivityContainer {
+  margin: 20px 25px;
+  }
+  .header {
+  background: #d4d4d4;
+  }
+
+  .netStyle {
+  background: #eee;
+  }
+
+  #months .domain {
+  display: none;
+  }
+
+  #month {
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-variant: normal;
+  }
+
+  #chartContainer {
+  text-align: center;
+  }
+
+  .axis path,
+  .axis line {
+  fill: none;
+  shape-rendering: crispEdges;
+  stroke: lightgrey;
+  }
+
+  .axis text {
+  font-family: sans-serif;
+  font-size: 11px;
+  }
+
+  #monthChart path {
+  fill:none;
+  }
+
+  .monthlyAcitivityTable  tr:nth-child(2)  td:last-child , .monthlyAcitivityTable  tr:nth-child(3)  td:last-child ,  .monthlyAcitivityTable  tr:nth-child(4)  td:last-child{
+  font-weight: bold !important;
+  font-size:14px;
+
+  }
+
+  .monthlyAcitivityTable-bordered th {
+  width: 12%;
+  }
+
+  .monthlyAcitivityTable {
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  }
+
+  .monthlyAcitivityTable thead > tr > th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dddddd;
+  }
+
+  .monthlyAcitivityTable-bordered > tbody > tr:first-child > th, .monthlyAcitivityTable-bordered > thead > tr:first-child > td, .monthlyAcitivityTable-bordered > tbody > tr:first-child > td, .monthlyAcitivityTable-bordered > tfoot > tr:first-child > td {
+  border: none !important;
+  }
+
+  .monthlyAcitivityTable-bordered > tbody > tr > td {
+  text-align: center;
+  }
+
+  .monthlyAcitivityTable-bordered > thead > tr > th, .monthlyAcitivityTable-bordered > tbody > tr > th, .monthlyAcitivityTable-bordered > tfoot > tr > th, .monthlyAcitivityTable-bordered > thead > tr > td, .monthlyAcitivityTable-bordered > tbody > tr > td, .monthlyAcitivityTable-bordered > tfoot > tr > td {
+  border: 1px solid #dddddd;
+  }
+
+  .monthlyAcitivityTable thead > tr > th, .monthlyAcitivityTable tbody > tr > th, .monthlyAcitivityTable tfoot > tr > th, .monthlyAcitivityTable thead > tr > td, .monthlyAcitivityTable tbody > tr > td, .monthlyAcitivityTable tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.428571429;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+  }
+</style>
