@@ -339,7 +339,7 @@
             .text("등록")
             .attr("class", "legend")
             .attr("x", 5)
-            .attr("y", 270 + margin.top);
+            .attr("y", 250 + margin.top);
 
         // chart.append("text")
         //     .text("顾客")
@@ -350,7 +350,7 @@
 
         chart.append('text')
             .attr("x", 5)
-            .attr("y", 330 + margin.top)
+            .attr("y", 280 + margin.top)
             .attr("class", "legend")
             .attr('font-family', 'FontAwesome')
             .text(function (d) {
@@ -373,7 +373,7 @@
         var monthLegend = d3.select("#monthLegend");
 
         monthLegend.append('rect')
-            .attr('width', w + 80)
+            .attr('width', w + 112)
             .attr('height', 70)
             .attr('x', -80)
             .attr('y', 96);
@@ -487,6 +487,7 @@
 
     #chartContainer {
         text-align: center;
+        padding:0px;
     }
 
     .drawLine {
