@@ -1,0 +1,577 @@
+﻿<section class="mela-section background--secondary">
+    <div class="container container--heading-top">
+        <h1 class="heading">
+            <span class="heading__copy copy--weight-medium">{{title}} </span>
+        </h1>
+    </div>
+    <div class="container container--heading-top">
+        <p class="heading__copy copy--weight-medium" style="font-size:.875rem;">{{description}}</p>
+    </div>
+    <div class="container container--content cf" id="chartContainer" style="height:550px">
+        <h1 class="heading" id="secondTitle">
+            <span class="heading__copy copy--weight-medium">이전 12개월</span>
+        </h1>
+        <svg id="chart"></svg>
+    </div>
+    <div class="container">
+    </div>
+</section>
+
+
+<section class="mela-section background--secondary">
+    <div class="container container--content cf">
+        <div>
+            <table class="monthlyAcitivityTable">
+                <thead>
+                    <tr>
+                        <th style="background:white"></th>
+                        <th>월</th>
+                        <th>{{headerEnrollment}}</th>
+                        <th>{{headerCancellation}}</th>
+                        <th>{{headerNet}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in monthlyActivity track by $index" ng-class="isLine_ForMobile(data)">
+                        <td>
+                            <div ng-if="data.mark == 'mark'">{{data.YearLabel}}</div>
+                        </td>
+                        <td class="drawLightLine">{{data.MonthLabel}}</td>
+                        <td class="drawLightLine">{{data.enrollments}}</td>
+                        <td class="drawLightLine">{{data.cancellations}}</td>
+                        <td class="drawLightLine">{{data.net}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+
+
+<script>
+    var w = $(window).width() * 0.9;
+    var h = 150;
+    var margin = {
+        top: 50,
+        right: 20,
+        bottom: 15,
+        left: 50
+    };
+    var rectWidth = 20;
+    var rectSpacing = 0;
+
+    function initialChart(viewBox) {
+        d3.select("#chartContainer")
+            .style("padding-bottom", "25px")
+            .attr("preserveAspectRatio", "xMidYMax meet")
+            .attr("viewBox", viewBox);
+    }
+
+    function drawEnrollmentsReport(enrollments, months, monthlyActivity) {
+        var chart1 = d3.select("#chart")
+            .attr("width", w + margin.left + margin.right)
+            .attr("height", h + margin.top + margin.bottom)
+            .append("g")
+            .attr("id", "enrollment")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        drawLegend();
+
+        var xScale = d3.scale.linear().domain([0, months.map(function (d) {
+            return d.MonthValue;
+        })]).range([0, w]);
+
+
+        var xAxis = d3.svg.axis()
+            .scale(xScale)
+            .orient("bottom");
+
+        var y = d3.scale.linear().range([h, 0]);
+
+        y.domain([0, d3.max(enrollments, function (d) {
+            return d;
+        })]);
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .ticks(10);
+
+        chart1.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + h + ")")
+            .call(xAxis);
+
+        chart1.selectAll("rect")
+            .data(enrollments)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) {
+                //return i * (w / enrollments.length) - rectSpacing;
+                return i * (w / (enrollments.length + 1.5))
+            })
+            .attr("y", function (d) {
+                return h;
+            })
+            .attr("id", function (d, i) {
+                return "rectIndex" + (i + 1);
+            })
+            .attr("width", rectWidth)
+            .attr("height", function (d) {
+                return 0;
+            })
+            .attr("fill", "#f7922b")
+            .transition()
+            .delay(function (d, i) {
+                return i * 200;
+            })
+            .attr("y", function (d, i) {
+                return y(d);
+            })
+            .attr("height", function (d) {
+                return h - y(d);
+            });
+
+
+        chart1
+            .selectAll("text")
+            .data(enrollments)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                return d;
+            })
+            .attr("x", function (d, i) {
+                //return i * (w / enrollments.length) + 2;
+                return i * (w / (enrollments.length + 1.5)) + 2
+            })
+            .attr("y", function (d) {
+                return y(d) - 6;
+            })
+            .attr("font-family", "sans-serif")
+            .attr("fill", "#848080")
+            .attr("opacity", 0)
+            .transition()
+            .delay(function (d, i) {
+                return i * 200;
+            })
+            .attr("opacity", 1)
+            .call(endAll, function () {
+                $("#enrollment").find("text:last").attr("fill", "black");
+                $("#enrollment").find("text:last").attr("fill", "black");
+                $("#cancellationChart").find("text:last").attr("fill", "black");
+            });
+
+        $("#chart").attr('height', "100%");
+    }
+
+    function drawMonthAxis(months, monthlyActivity) {
+
+        var height = 100,
+            padding = 100,
+            middleMonths = [];
+
+        var itemsGroupByYear = _.groupBy(monthlyActivity, 'YearLabel');
+
+        _.each(itemsGroupByYear, function (items) {
+            var middleItem = items[Math.round((items.length - 1) / 2)];
+            middleMonths.push(middleItem);
+        });
+
+        var vis = d3.select("#chart")
+            .append("g")
+            .attr("width", w + margin.left + margin.right)
+            .attr("height", 20)
+            .attr("id", "months")
+            .attr("transform", "translate(" + margin.left + "," + (54 + margin.top) + ")");
+
+
+        var xScale = d3.scale.ordinal().rangeRoundBands([0, w], 0.1);
+
+        xScale.domain(months.map(function (d) {
+            return d.MonthValue;
+        }));
+
+        var xAxis = d3.svg.axis()
+            .orient("bottom")
+            .scale(xScale);
+
+        var monthLegend = vis.append("g").attr("id", "monthLegend");
+
+        vis.append("g")
+            .attr("class", "xaxis")
+            .attr("transform", "translate(10," + (height) + ")")
+            .call(xAxis);
+
+
+        vis.selectAll(".tick")
+            .data(monthlyActivity)
+            .attr("transform", function (d, i) {
+                //var xPosition = i * (w / (months.length));
+                var xPosition = i * (w / (months.length + 1.5));
+                return "translate(" + xPosition + ",0)";
+            })
+            .attr("id", function (d, i) {
+                return "monthIndex" + d.MonthIndex;
+            });
+
+        vis.selectAll(".xaxis text")
+            .attr("font-family", "sans-serif")
+            .attr("fill", "#848080")
+
+        _.each(middleMonths, function (ele) {
+            var monthIndex = ele.MonthIndex;
+            var $ele = $("#monthIndex" + monthIndex);
+            var $copyEle = $ele.find("text:eq(0)").clone();
+            $copyEle.attr('y', 40);
+            $copyEle.text(ele.YearLabel);
+            $ele.append($copyEle);
+        });
+
+
+    }
+
+    function drawCancellationsReport(cancellations, months) {
+        var chart2 = d3.select("#chart")
+            .append("g")
+            .attr("id", "cancellationChart")
+            .attr("width", w + margin.left + margin.right)
+            .attr("height", h + margin.top + margin.bottom)
+            .attr("transform", "translate(" + margin.left + "," + (240 + margin.top) + ")");
+
+        var xScale2 = d3.scale.linear().domain([0, months.map(function (d) {
+            return d.MonthValue;
+        })]).range([0, w]);
+
+
+
+        var xAxis2 = d3.svg.axis()
+            .scale(xScale2)
+            .orient("bottom");
+
+        var y = d3.scale.linear().range([h, 0]);
+
+        y.domain([0, d3.max(cancellations, function (d) {
+            return d;
+        })]);
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .ticks(10);
+
+        chart2.selectAll("rect")
+            .data(cancellations)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) {
+                //return i * (w / cancellations.length)-rectSpacing;
+                return i * (w / (cancellations.length + 1.5));
+            })
+            .attr("y", 0)
+            .attr("width", rectWidth)
+            .attr("height", function (d) {
+                return 0;
+            })
+            .attr("fill", "#26bbb4")
+            .transition()
+            .delay(function (d, i) {
+                return i * 200;
+            })
+            .attr("y", function (d, i) {
+                return 0;
+            })
+            .attr("height", function (d) {
+                return h - y(d);
+            });
+
+
+        chart2.selectAll("text")
+            .data(cancellations)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                return d;
+            })
+            .attr("x", function (d, i) {
+                //return i * (w / cancellations.length);
+                return i * (w / (cancellations.length + 1.5)) + 2;
+            })
+            .attr("y", function (d) {
+                return h - y(d) + 14;
+            })
+            .attr("font-family", "sans-serif")
+            //.attr("font-size", "11px")
+            .attr("fill", "#848080")
+            .attr("opacity", 0)
+            .transition()
+            .delay(function (d, i) {
+                return i * 200;
+            })
+            .attr("opacity", 1);
+
+        chart2.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + 0 + ")")
+            .call(xAxis2);
+    }
+
+    function drawLegend() {
+
+        var chart = d3.select("#chart");
+
+        chart.append("text")
+            .text("등록")
+            .attr("class", "legend")
+            .attr("x", 0)
+            .attr("y", 110 + margin.top);
+
+        chart.append('text')
+            .attr("x", 0)
+            .attr("y", 140 + margin.top)
+            .attr("class", "legend")
+            .attr('font-family', 'FontAwesome')
+            .text(function (d) {
+                return '\uf067'
+            });
+
+        chart.append("text")
+            .text("등록")
+            .attr("class", "legend")
+            .attr("x", 0)
+            .attr("y", 270 + margin.top);
+
+        // chart.append("text")
+        //     .text("顾客")
+        //     .attr("class", "legend")
+        //     .attr("x", 0)
+        //     .attr("y", 300 + margin.top);
+
+
+        chart.append('text')
+            .attr("x", 0)
+            .attr("y", 330 + margin.top)
+            .attr("class", "legend")
+            .attr('font-family', 'FontAwesome')
+            .text(function (d) {
+                return '\uf068'
+            });
+
+    }
+
+    function drawVerticalSeparatorLine(monthlyActivity) {
+
+        var chart = d3.select("#chart");
+
+
+        var middleX = 0;
+
+        var itemsGroupByYear = _.groupBy(monthlyActivity, 'YearLabel');
+
+        var years = _.keys(itemsGroupByYear);
+
+        var monthLegend = d3.select("#monthLegend");
+
+        monthLegend.append('rect')
+            .attr('width', w + 80)
+            .attr('height', 90)
+            .attr('x', -80)
+            .attr('y', 96);
+
+
+        monthLegend.append("text")
+            .text("월")
+            .attr("font", "normal 10px Arial,Helvetica,sans-serif")
+            .attr("x", -40)
+            .attr("y", 125)
+            .attr("fill", "white");
+
+        monthLegend.append("text")
+            .text("년")
+            .attr("font", "normal 10px Arial,Helvetica,sans-serif")
+            .attr("x", -40)
+            .attr("y", 150)
+            .attr("fill", "white");
+
+        if (years.length <= 1) return;
+
+        var lastMonth = _.last(itemsGroupByYear[_.keys(itemsGroupByYear)[0]]);
+
+
+        var monthIndex = lastMonth.MonthIndex;
+        var nextMonthIndex = monthIndex + 1;
+        var x1 = d3.transform(d3.select("#monthIndex" + monthIndex).attr("transform")).translate[0];
+        var x2 = d3.transform(d3.select("#monthIndex" + nextMonthIndex).attr("transform")).translate[0];
+
+        middleX = (x2 - x1) / 2 + (rectWidth / 2);
+
+
+
+        monthLegend.append("line")
+            .attr("class", "line")
+            .attr("x1", x1 + middleX)
+            .attr("x2", x1 + middleX)
+            .attr("y1", 95)
+            .attr("y2", 190)
+            .attr("stroke", "white")
+            .attr("fill", "white")
+            .attr("stroke-width", 2);
+
+    }
+
+    function endAll(transition, callback) {
+        var n = 0;
+        transition.each(function () {
+                ++n;
+            })
+            .each('end', function () {
+                if (!--n) callback.apply(this, arguments);
+            });
+    }
+</script>
+
+<style>
+    #monthlyActivityContainer {
+        margin: 20px 25px;
+    }
+
+    .header {
+        background: #d4d4d4;
+    }
+
+    .netStyle {
+        background: #eee;
+    }
+
+    .legend {
+
+        font-family: Arial, Helvetica, sans-serif;
+        font-style: normal;
+        fill: #848080;
+    }
+
+    #secondTitle {
+        text-align: left;
+
+    }
+
+    #month {
+        font-family: Tahoma, Verdana, Segoe, sans-serif;
+
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        color: #848080;
+    }
+
+    .monthlyAcitivityTable th {
+        border-right: 1px solid;
+    }
+
+    .monthlyAcitivityTable td:nth-child(even) {
+        background: #eee;
+    }
+
+    .monthlyAcitivityTable {
+        color: #615050;
+    }
+
+    #months .domain {
+        display: none;
+    }
+
+    #months text {
+        fill: white;
+
+    }
+
+    #chartContainer {
+        text-align: center;
+    }
+
+    .drawLine {
+        border-top: 3px solid #b1afaf;
+    }
+
+    .drawLightLine {
+        border-top: 1px solid #dddddd;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        shape-rendering: crispEdges;
+        stroke: lightgrey;
+        stroke-width: 2px;
+    }
+
+    #cancellationChart path {
+        display: none;
+    }
+
+    g text {
+        font-family: sans-serif;
+
+    }
+
+    #monthChart path {
+        fill: none;
+    }
+
+    .monthlyAcitivityTable-bordered th {
+        width: 12%;
+    }
+
+    .monthlyAcitivityTable {
+        background-color: transparent;
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+
+    .monthlyAcitivityTable thead>tr>th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dddddd;
+        background: black;
+        color: white;
+        text-align: center;
+    }
+
+    .monthlyAcitivityTable tbody>tr>td {
+        text-align: center;
+    }
+
+    .monthlyAcitivityTable-bordered>tbody>tr:first-child>th,
+    .monthlyAcitivityTable-bordered>thead>tr:first-child>td,
+    .monthlyAcitivityTable-bordered>tbody>tr:first-child>td,
+    .monthlyAcitivityTable-bordered>tfoot>tr:first-child>td {
+        border: none !important;
+    }
+
+    .monthlyAcitivityTable-bordered>tbody>tr>td {
+        text-align: center;
+    }
+
+    .monthlyAcitivityTable-bordered>thead>tr>th,
+    .monthlyAcitivityTable-bordered>tbody>tr>th,
+    .monthlyAcitivityTable-bordered>tfoot>tr>th,
+    .monthlyAcitivityTable-bordered>thead>tr>td,
+    .monthlyAcitivityTable-bordered>tbody>tr>td,
+    .monthlyAcitivityTable-bordered>tfoot>tr>td {
+        border: 1px solid #dddddd;
+    }
+
+    .monthlyAcitivityTable thead>tr>th,
+    .monthlyAcitivityTable tbody>tr>th,
+    .monthlyAcitivityTable tfoot>tr>th,
+    .monthlyAcitivityTable thead>tr>td,
+    .monthlyAcitivityTable tbody>tr>td,
+    .monthlyAcitivityTable tfoot>tr>td {
+        padding: 8px;
+        line-height: 1.428571429;
+        vertical-align: top;
+    }
+</style>
