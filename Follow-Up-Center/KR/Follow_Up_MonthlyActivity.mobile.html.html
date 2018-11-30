@@ -238,7 +238,7 @@
             .attr("id", "cancellationChart")
             .attr("width", w + margin.left + margin.right)
             .attr("height", h + margin.top + margin.bottom)
-            .attr("transform", "translate(" + margin.left + "," + (240 + margin.top) + ")");
+            .attr("transform", "translate(" + margin.left + "," + (220 + margin.top) + ")");
 
         var xScale2 = d3.scale.linear().domain([0, months.map(function (d) {
             return d.MonthValue;
@@ -323,11 +323,11 @@
         chart.append("text")
             .text("등록")
             .attr("class", "legend")
-            .attr("x", 0)
+            .attr("x", 5)
             .attr("y", 110 + margin.top);
 
         chart.append('text')
-            .attr("x", 0)
+            .attr("x", 5)
             .attr("y", 140 + margin.top)
             .attr("class", "legend")
             .attr('font-family', 'FontAwesome')
@@ -338,7 +338,7 @@
         chart.append("text")
             .text("등록")
             .attr("class", "legend")
-            .attr("x", 0)
+            .attr("x", 5)
             .attr("y", 270 + margin.top);
 
         // chart.append("text")
@@ -349,7 +349,7 @@
 
 
         chart.append('text')
-            .attr("x", 0)
+            .attr("x", 5)
             .attr("y", 330 + margin.top)
             .attr("class", "legend")
             .attr('font-family', 'FontAwesome')
@@ -374,7 +374,7 @@
 
         monthLegend.append('rect')
             .attr('width', w + 80)
-            .attr('height', 90)
+            .attr('height', 70)
             .attr('x', -80)
             .attr('y', 96);
 
