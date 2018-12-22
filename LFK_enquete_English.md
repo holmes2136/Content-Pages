@@ -3,9 +3,9 @@
 
 # Applicant
 
-- Frist Name:
-- Last Name:
-- Date:
+- Frist Name: HUAN-YING
+- Last Name: JHU    
+- Date: 2018/12/22
 
 # Preface
 
@@ -24,7 +24,7 @@ If you wish to add to the list, or your choice of programming is not in the list
 
 ### Language
 
-- [ ] JavaScript
+- [x] JavaScript
 - [ ] C/C++
 - [ ] Java
 - [ ] Ruby
@@ -34,7 +34,9 @@ If you wish to add to the list, or your choice of programming is not in the list
 - [ ] Clojure
 - [ ] Swift
 
+
 Others:
+- [x] C#
 
 ### Frameworks & State Management
 
@@ -43,8 +45,8 @@ Others:
 - [ ] React
     - [ ] Redux
     - [ ] Relay
-- [ ] Angular
-    - [ ] Angular 1
+- [x] Angular
+    * [x] Angular 1
     - [ ] Angular 2
 - [ ] Ember
 - [ ] Backbone
@@ -64,11 +66,11 @@ Others:
 ### Testing
 
 - [ ] Mocha
-- [ ] Jasmine
+- [x] Jasmine
 - [ ] Enzyme
 - [ ] Jest
 - [ ] Ava
-- [ ] Selenium
+- [x] Selenium
 - [ ] WebDriver
 
 Others:
@@ -109,6 +111,8 @@ Others:
 - [ ] GraphQL
 
 Others:
+- [x] C# MVC
+- [x] C# Entity Framework
 
 ### Database
 
@@ -119,6 +123,7 @@ Others:
 - [ ] Amazon Aurora
 
 Others:
+Microsoft SQL Server
 
 ### Virtualization
 
@@ -130,7 +135,7 @@ Others:
 ### OS
 
 - [ ] macOS
-- [ ] Windows
+- [x] Windows
 - [ ] Linux (Red Hat family)
 - [ ] Linux (Debian family)
 - [ ] Linux (Etc)
@@ -148,12 +153,13 @@ Others:
 
 - [ ] Vim
 - [ ] Emacs
-- [ ] VS Code
-- [ ] Sublime Text
+- [x] VS Code
+- [x] Sublime Text
 - [ ] Atom
 - [ ] IntelliJ IDEA
 
 Others:
+Microsoft Visual Studio
 
 ### UML/Diagram
 
@@ -167,12 +173,13 @@ Others:
 ### SCM
 
 - [ ] CVS
-- [ ] Subversion
-- [ ] Git
+- [x] Subversion
+- [x] Git
 - [ ] Mercurial
 - [ ] Perforce
 
 Others:
+TFS
 
 ### CI
 
@@ -181,27 +188,29 @@ Others:
 - [ ] Travis CI
 
 Others:
+Teamcity
 
 ### Issue Tracker
 
 - [ ] JIRA
 - [ ] Redmine
 - [ ] Bugzilla
-- [ ] Trello
+* [x] Trello
 
 Others:
+TFS
 
 ### Agile Process
 
 - [ ] Scrum
 - [ ] XP
-- [ ] Kanban
+- [x] Kanban
 
 Others:
 
 ### Social Coding & Code Review
 
-- [ ] GitHub
+- [x] GitHub
 - [ ] Bitbucket
 - [ ] GitLab
 - [ ] Stash
