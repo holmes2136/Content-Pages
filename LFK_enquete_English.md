@@ -240,11 +240,11 @@ Others:
 
 ### Public Repository URL (if you have GitHub and Bitbucket accounts)
 
-<Your Response>
+https://github.com/holmes2136
 
 ### Public URL (blog, Twitter., etc)
 
-<Your Response>
+https://dotblogs.com.tw/holmes2136/
 
 ### What are the names of the technical writings (book and articles) that had the most profound impact on you? (list upto 3, if you have any)
 
