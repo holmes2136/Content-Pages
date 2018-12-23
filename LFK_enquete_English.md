@@ -246,6 +246,30 @@ It try to implement the OOP to make javascript more maintainable
 
 ### Among the projects you have worked on, which one are you  most proud of? What were your tasks in the project, and how did you use your knowledge/skills to come up with the solution?
 
+SBLCENTER 
+
+Which is project about Stock broker securities lending , 
+It' brand new project in the meantime depend on government's requirement , 
+So there are some problems i need to face :
+
+1.Tough deadline
+2.Need to integrate old version application
+3.Go to the next generation tech for maintainable purpose
+4.Large scope reports and functionalities requirement
+5.Our developers is not good both font-end and backend
+
+Old version application still build in Server-side style programing which may  mix business logic with UI , 
+We try to use MVC style for maintainalbe and resource reuse purpose , so we extract some business logic into REST API style so that make old application can alive with new application
+
+Due to the point 5 , we can not just allow one person do the full-stack work which make work slow , under MVC style programing , we can easily split into font-end and back-end works 
+
+We have a lots of reports need to build
+1.We try to splite works into database work and backend work due to some people is good in database
+2.Use third-party reporint service to easily to buld the UI of report and scall possibility
+
+Some UI is complex
+Becuase the industry character , some ui is complex make hard maintainable , so we induct Angular to resolve this , 
+make UI more OOP 
 
 
 ### Public Repository URL (if you have GitHub and Bitbucket accounts)
@@ -258,6 +282,8 @@ https://dotblogs.com.tw/holmes2136/
 
 ### What are the names of the technical writings (book and articles) that had the most profound impact on you? (list upto 3, if you have any)
 
-<Your Response>
+* Design Patterns by the Gang of Four
+* Code Complete (2nd edition) by Steve McConnell
+* Writing Solid Code by Steve Maguire
 
 # Thank you for your participation.
