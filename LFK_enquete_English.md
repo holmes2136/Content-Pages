@@ -226,17 +226,27 @@ Others:
 
 ### Among the apps you are currently using, which ones are you particularly interested in or using frequently? (web/smartphone apps are both acceptible; make sure to provide one frequently used app and what you have learned about in the last one year.)
 
-<Frequently used app>
+Coursera : 
+This app may not be my first frequently used option , more time i use is for pay something like app pay , line pay etc.. , but most of the apps is focus in resolve people's requiremet on fast pace , but i would like to choose the second option which provide more interesting things and good future .
+
+1. I can use my less time to learn something new stuff
+2. It set up the something like deadline try to push you to learning
+3. Build-in lot of languages
+4. The total time each video around 15 min
+5. A lots of course , compare with the other platform which they on tend to practical 
+
 
 <In the last 1 year I haved learned ->
 
 ### Among the technologies you are recently interersted in, give us the name of one and the reason it draws your attention (list upto three points).
 
-<Your response>
+Typescript 
+
+It try to implement the OOP to make javascript more maintainable
 
 ### Among the projects you have worked on, which one are you  most proud of? What were your tasks in the project, and how did you use your knowledge/skills to come up with the solution?
 
-<Your response>
+
 
 ### Public Repository URL (if you have GitHub and Bitbucket accounts)
 
