@@ -195,7 +195,7 @@ Teamcity
 - [ ] JIRA
 - [ ] Redmine
 - [ ] Bugzilla
-* [x] Trello
+- [x] Trello
 
 Others:
 TFS
@@ -221,56 +221,69 @@ Others:
 ## Q2. Please respond to the following question.
 
 ### What are the specific kind of work you wish to pursue in LINE?
-
-
+```
+I’m looking for a new challenge that can help me broaden my experience. 
+I believe this change of industry will do just that. With my skill set and experience, 
+this would give me an opportunity to build new working relationships and learn new things.
+```
 
 ### Among the apps you are currently using, which ones are you particularly interested in or using frequently? (web/smartphone apps are both acceptible; make sure to provide one frequently used app and what you have learned about in the last one year.)
-
-Coursera : 
-This app may not be my first frequently used option , more time i use is for pay something like app pay , line pay etc.. , but most of the apps is focus in resolve people's requiremet on fast pace , but i would like to choose the second option which provide more interesting things and good future .
+```
+Coursera app: 
+This app may not be my first frequently used option , most of the time i used is  like apple pay , line pay etc.. , 
+But those is focus in resolve people's requiremet on fast pace , but i would like to choose the second option which provide more interesting things .
 
 1. I can use my less time to learn something new stuff
-2. It set up the something like deadline try to push you to learning
+2. It set up the something like deadline try to push you to learn
 3. Build-in lot of languages
-4. The total time each video around 15 min
+4. The total time of each video around 15 min let you can focus
 5. A lots of course , compare with the other platform which they on tend to practical 
-
-
-<In the last 1 year I haved learned ->
+```
 
 ### Among the technologies you are recently interersted in, give us the name of one and the reason it draws your attention (list upto three points).
-
+```
 Typescript 
 
-It try to implement the OOP to make javascript more maintainable
+1.Build the OOP style to make javascript more maintainable
+2.Typed( Static type checking )
+3.Namespacing concept
+```
 
 ### Among the projects you have worked on, which one are you  most proud of? What were your tasks in the project, and how did you use your knowledge/skills to come up with the solution?
+```
+SBLCENTER project
+I as a full-stack developer , introduce MVC and RESTful coding into project , 
+also componment the UI to let evey developer following the standard so that  easily process their work.
 
-SBLCENTER 
-
-Which is project about Stock broker securities lending , 
-It' brand new project in the meantime depend on government's requirement , 
+Which is a project about stock broker securities lending , 
+It's brand new project in the meantime depend on government's requirement , 
 So there are some problems i need to face :
 
-1.Tough deadline
-2.Need to integrate old version application
-3.Go to the next generation tech for maintainable purpose
-4.Large scope reports and functionalities requirement
-5.Our developers is not good both font-end and backend
+1. Tough deadline
+2. Need to integrate with old version application
+3. Introduce MVC style and RESTful coding for maintainable purpose
+4. Large scope reports and functionalities requirements
+5. Too much ui requirement and we use Angular to resolve complicate UI
+6. Our developers most only good at font-end or backend
 
-Old version application still build in Server-side style programing which may  mix business logic with UI , 
-We try to use MVC style for maintainalbe and resource reuse purpose , so we extract some business logic into REST API style so that make old application can alive with new application
+Old version application builded by Server-side style programing which mix business logic with UI , 
+We try to use MVC framework for maintainalbe purpose , and we also extract business logic into REST API  so that make resource can be used by old application and new application , and in the future we even can implement unit-test more easily
 
-Due to the point 5 , we can not just allow one person do the full-stack work which make work slow , under MVC style programing , we can easily split into font-end and back-end works 
+According  point 5 , some problems as following :
+1.We need to consistent all the ui make sure they have same style , same action
+We compoment all the UI and injecct bootstrap so that we can make sure resolve above prolblem
+2.Some UI is complex
+Becuase the industry feature , some ui is complicate make it hard to maintain , so we introduce Angular to resolve this , 
+make UI more OOP 
+
+According to the point 6 , we can not just allow one person do the full-stack work which make progress slow , under MVC style programing , we can easily split into font-end and back-end works 
 
 We have a lots of reports need to build
 1.We try to splite works into database work and backend work due to some people is good in database
-2.Use third-party reporint service to easily to buld the UI of report and scall possibility
+2.Use third-party reporting service to easily to buld the UI of report and scall possibility
 
-Some UI is complex
-Becuase the industry character , some ui is complex make hard maintainable , so we induct Angular to resolve this , 
-make UI more OOP 
 
+```
 
 ### Public Repository URL (if you have GitHub and Bitbucket accounts)
 
